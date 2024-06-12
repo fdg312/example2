@@ -16,6 +16,9 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 			ignoreExpiration: true,
 			secretOrKey: configService.get('JWT_SECRET'),
 		})
+
+		const someOtherValue = configService.get('JWT_SECRET')
+		console.log('Some other value:', someOtherValue)
 	}
 
 	async validate({ id }: Pick<User, 'id'>) {
