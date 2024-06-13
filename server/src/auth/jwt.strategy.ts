@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common'
-import { ConfigService } from '@nestjs/config'
-import { PassportStrategy } from '@nestjs/passport'
-import { User } from '@prisma/client'
 import { ExtractJwt, Strategy } from 'passport-jwt'
+import { PassportStrategy } from '@nestjs/passport'
+import { Injectable } from '@nestjs/common'
+import { getJwtConfig } from '../config/jwt.config'
 import { PrismaService } from '../prisma.service'
+import { User } from '@prisma/client'
+import { ConfigService } from '@nestjs/config'
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -16,9 +17,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 			ignoreExpiration: true,
 			secretOrKey: configService.get('JWT_SECRET'),
 		})
-
-		const someOtherValue = configService.get('JWT_SECRET')
-		console.log('Some other value:', someOtherValue)
 	}
 
 	async validate({ id }: Pick<User, 'id'>) {
