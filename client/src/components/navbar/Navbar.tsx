@@ -169,7 +169,7 @@ const Navbar = () => {
 					) : (
 						<div className='flex items-center'>
 							<Link
-								href='/auth/login'
+								href='/login'
 								className='flex items-center text-[14px] ml-2 bg-[#7AC751] h-full px-4 text-white rounded-[10px] hover:bg-[#71bb49]'
 							>
 								Войти
