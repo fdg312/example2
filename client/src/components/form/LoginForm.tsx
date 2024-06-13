@@ -5,6 +5,7 @@ import {
 	UseFormReturn,
 } from 'react-hook-form'
 import InputForm from '../input/inputForm/InputForm'
+import Link from 'next/link'
 
 type LoginFormType = {
 	errors: FieldErrors<any>
@@ -40,17 +41,14 @@ const LoginForm = ({ errors, register, onSubmit }: LoginFormType) => {
 			</button>
 			<div>
 				<span className='mr-1'>Ещё нет аккаунта?</span>
-				<button className='text-[#7AC751]' onClick={() => setIsLogin(false)}>
+				<Link className='text-[#7AC751]' href='/auth/signup'>
 					Зарегистрироваться
-				</button>
+				</Link>
 			</div>
 			<div>
-				<button
-					className='text-[#7AC751]'
-					onClick={() => setIsForgotPassword(true)}
-				>
+				<Link className='text-[#7AC751]' href='/auth/forgot-password'>
 					Забыл пароль?
-				</button>
+				</Link>
 			</div>
 		</form>
 	)

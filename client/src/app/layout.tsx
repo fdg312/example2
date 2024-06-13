@@ -14,10 +14,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
 	children,
-	modal,
+	auth,
 }: {
 	children: React.ReactNode
-	modal: React.ReactNode
+	auth: React.ReactNode
 }) {
 	return (
 		<Providers>
@@ -26,8 +26,8 @@ export default function RootLayout({
 					<Navbar />
 					<Aside />
 					<main className='container'>
+						{auth}
 						{children}
-						{modal}
 					</main>
 				</body>
 			</html>

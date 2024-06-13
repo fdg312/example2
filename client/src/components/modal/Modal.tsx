@@ -1,12 +1,16 @@
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import React, { useRef } from 'react'
 
 const Modal = ({ children }: { children: React.ReactNode }) => {
 	const modalRef = useRef<HTMLDivElement>(null)
 	const router = useRouter()
+	const pathname = usePathname()
 
 	const handleClose = (event: any) => {
 		if (modalRef.current && !modalRef.current.contains(event.target)) {
+			if (pathname.split('/').includes('auth')) {
+				return router.push('/')
+			}
 			router.back()
 		}
 	}

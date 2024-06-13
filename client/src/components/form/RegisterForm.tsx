@@ -1,9 +1,5 @@
-import {
-	FieldErrors,
-	SubmitHandler,
-	UseFormRegister,
-	UseFormReturn,
-} from 'react-hook-form'
+import Link from 'next/link'
+import { FieldErrors, SubmitHandler, UseFormRegister } from 'react-hook-form'
 import InputForm from '../input/inputForm/InputForm'
 
 type RegisterFormType = {
@@ -59,9 +55,9 @@ const RegisterForm = ({ errors, register, onSubmit }: RegisterFormType) => {
 			</button>
 			<div>
 				<span className='mr-1'>Уже есть аккаунт?</span>
-				<button className='text-[#7AC751]' onClick={() => setIsLogin(true)}>
+				<Link className='text-[#7AC751]' href='/auth/login'>
 					Войти
-				</button>
+				</Link>
 			</div>
 		</form>
 	)

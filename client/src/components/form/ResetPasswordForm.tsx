@@ -1,9 +1,4 @@
-import {
-	FieldErrors,
-	SubmitHandler,
-	UseFormRegister,
-	UseFormReturn,
-} from 'react-hook-form'
+import { FieldErrors, SubmitHandler, UseFormRegister } from 'react-hook-form'
 import InputForm from '../input/inputForm/InputForm'
 
 type ResetPasswordFormType = {
