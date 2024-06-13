@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import { ProductCard } from '@/components/productcard/ProductCard'
 import { AddService } from '@/services/add'
@@ -14,53 +14,54 @@ import useSessionStore from '@/stores/sessionStore'
 const mulish = Mulish({ subsets: ['cyrillic'] })
 
 export default function Home() {
-  const { adds, setAdds, city } = useSessionStore()
-  const [loading, setLoading] = useState(true)
-  const searchParams = useSearchParams()
+	const { adds, setAdds, city } = useSessionStore()
+	const [loading, setLoading] = useState(true)
+	const searchParams = useSearchParams()
 
-  useEffect(() => {
-    const fetchData = async (city: string) => {
-      console.log(city, 'city_fetch');
-      
-      const adds = await AddService.getAll(10, searchParams.get('query') || '', city);
-      
-      setAdds(adds);
-    };
+	useEffect(() => {
+		const fetchData = async (city: string) => {
+			const adds = await AddService.getAll(
+				10,
+				searchParams.get('query') || '',
+				city
+			)
 
-    useSessionStore.subscribe(
-      (state, prevState) => {
-        if (state.city !== prevState.city) {
-          fetchData(state.city);
-        }
-      }
-    )
+			setAdds(adds)
+		}
 
-    // fetchData(city);
-    setLoading(false)
-  }, [searchParams, city])
+		useSessionStore.subscribe((state, prevState) => {
+			if (state.city !== prevState.city) {
+				fetchData(state.city)
+			}
+		})
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const adds = await AddService.getAll(10);
-      
-      setAdds(adds);
-    };
+		setLoading(false)
+	}, [searchParams, city])
 
-    fetchData();
-  }, [])
-
-  return (
-    <main className='container'>
-      <div className="wrapper mt-6">
-        {
-          adds 
-          ?
-          <h2 className={'text-center text-[36px] text-[#555555] mb-8 font-bold mt-[20px] ' + mulish.className}>Мои объявления</h2>
-          :
-          <h2 className={'text-center text-[36px] text-[#555555] mb-8 font-bold mt-[20px] ' + mulish.className}>Нет объявлений</h2>
-        }
-        <AddsDiv loading={loading} setLoading={setLoading} adds={adds} />
-      </div>
-    </main>
-  )
+	return (
+		<main className='container'>
+			<div className='wrapper mt-6'>
+				{adds ? (
+					<h2
+						className={
+							'text-center text-[36px] text-[#555555] mb-8 font-bold mt-[20px] ' +
+							mulish.className
+						}
+					>
+						Мои объявления
+					</h2>
+				) : (
+					<h2
+						className={
+							'text-center text-[36px] text-[#555555] mb-8 font-bold mt-[20px] ' +
+							mulish.className
+						}
+					>
+						Нет объявлений
+					</h2>
+				)}
+				<AddsDiv loading={loading} setLoading={setLoading} adds={adds} />
+			</div>
+		</main>
+	)
 }

@@ -4,7 +4,7 @@ import useAuth from '@/stores/authStore'
 import useSessionStore from '@/stores/sessionStore'
 import Image from 'next/image'
 import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import avatar from '../../../public/ava.webp'
 import data from '../../constants/russia.json'
 import { Search } from '../search/Search'
@@ -20,6 +20,15 @@ const Navbar = () => {
 	const inputCityRef = React.useRef<HTMLInputElement>(null)
 	const divCitiesRef = React.useRef<HTMLDivElement>(null)
 
+	const getInputCity = useCallback(() => {
+		if (!inputCity) return
+		setCities(
+			data
+				.filter(obj => obj.city.toLowerCase().includes(inputCity.toLowerCase()))
+				.slice(0, 3)
+		)
+	}, [inputCity])
+
 	useEffect(() => {
 		if (localStorage.getItem('city')) {
 			setCity(localStorage.getItem('city') ?? '')
@@ -28,18 +37,10 @@ const Navbar = () => {
 					? ''
 					: localStorage.getItem('city') ?? ''
 			)
-			return
 		}
-	}, [])
 
-	useEffect(() => {
-		if (!inputCity) return
-		setCities(
-			data
-				.filter(obj => obj.city.toLowerCase().includes(inputCity.toLowerCase()))
-				.slice(0, 3)
-		)
-	}, [inputCity])
+		getInputCity()
+	}, [])
 
 	// useEffect(() => {
 	// 	if (isEditCity) {
