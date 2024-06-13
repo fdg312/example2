@@ -4,15 +4,17 @@ import { AddsDiv } from '@/components/addsDiv/addsDiv'
 import { AddService } from '@/services/add'
 import useSessionStore from '@/stores/sessionStore'
 import { Mulish } from 'next/font/google'
-import { useSearchParams } from 'next/navigation'
+import { usePathname, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 const mulish = Mulish({ subsets: ['cyrillic'] })
 
 export default function Default() {
-	const { adds, setAdds, city } = useSessionStore()
+	const { adds, setAdds, city, previousPage, setPreviousPage } =
+		useSessionStore()
 	const [loading, setLoading] = useState(true)
 	const searchParams = useSearchParams()
+	const pathname = usePathname()
 
 	useEffect(() => {
 		const fetchData = async (city: string) => {
@@ -33,31 +35,35 @@ export default function Default() {
 
 		setLoading(false)
 	}, [searchParams, city])
+	console.log(previousPage)
 
 	return (
-		<main className='container'>
-			<div className='wrapper mt-6'>
-				{adds ? (
-					<h2
-						className={
-							'text-center text-[36px] text-[#555555] mb-8 font-bold mt-[20px] ' +
-							mulish.className
-						}
-					>
-						Мои объявления
-					</h2>
-				) : (
-					<h2
-						className={
-							'text-center text-[36px] text-[#555555] mb-8 font-bold mt-[20px] ' +
-							mulish.className
-						}
-					>
-						Нет объявлений
-					</h2>
-				)}
-				<AddsDiv loading={loading} setLoading={setLoading} adds={adds} />
-			</div>
-		</main>
+		(!previousPage.length || previousPage.includes('/')) &&
+		!!pathname.split('/').includes('auth') && (
+			<main className='container'>
+				<div className='wrapper mt-6'>
+					{adds ? (
+						<h2
+							className={
+								'text-center text-[36px] text-[#555555] mb-8 font-bold mt-[20px] ' +
+								mulish.className
+							}
+						>
+							Мои объявления
+						</h2>
+					) : (
+						<h2
+							className={
+								'text-center text-[36px] text-[#555555] mb-8 font-bold mt-[20px] ' +
+								mulish.className
+							}
+						>
+							Нет объявлений
+						</h2>
+					)}
+					<AddsDiv loading={loading} setLoading={setLoading} adds={adds} />
+				</div>
+			</main>
+		)
 	)
 }

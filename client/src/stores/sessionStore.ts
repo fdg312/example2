@@ -8,8 +8,10 @@ type SessionState = {
 	city: string
 	adds: Array<IAddResponse>
 	categories: Array<ICategory>
+	previousPage: Array<string>
 	setCity: (city: string) => void
 	setAdds: (adds: Array<IAddResponse>) => void
+	setPreviousPage: (previousPage: Array<string>) => void
 }
 
 const useSessionStore = create<SessionState>(set => {
@@ -27,12 +29,14 @@ const useSessionStore = create<SessionState>(set => {
 		city: 'Россия',
 		adds: [],
 		categories: [],
+		previousPage: [],
 		setCity: (city: string) => {
 			set({ city })
 			localStorage.setItem('city', city)
 		},
 		setAdds: (adds: Array<IAddResponse>) => set({ adds }),
 		setCategories: (categories: Array<ICategory>) => set({ categories }),
+		setPreviousPage: (previousPage: Array<string>) => set({ previousPage }),
 	}
 })
 
