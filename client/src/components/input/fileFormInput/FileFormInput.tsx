@@ -1,7 +1,8 @@
+import Image from 'next/image'
 import { useRef, useState } from 'react'
 import { Control, Controller, FieldErrors } from 'react-hook-form'
+import slugify from 'slugify'
 import styles from './fileforminput.module.scss'
-import Image from 'next/image'
 
 type FileFormInputProps = {
 	errors: FieldErrors<any>
@@ -30,7 +31,6 @@ export const FileFormInput = ({
 	) => {
 		const files = event.target.files
 		if (files!.length + images.length > maxImages) return
-		console.log(files)
 
 		let imagesArr = images
 		if (files) {
@@ -39,6 +39,7 @@ export const FileFormInput = ({
 					imagesArr.length != 0 ? imagesArr[imagesArr.length - 1]?.id + 1 : 0
 				imagesArr.push({ image: files[i], id: newId })
 			}
+			console.log(imagesArr)
 
 			setPreviewImages(
 				imagesArr.map(file => ({
@@ -46,6 +47,8 @@ export const FileFormInput = ({
 					id: file.id,
 				}))
 			)
+			imagesArr = translateFileToEng(imagesArr)
+			console.log(imagesArr)
 			setImages(imagesArr)
 
 			return imagesArr
@@ -53,9 +56,18 @@ export const FileFormInput = ({
 	}
 
 	const removeImage = (index: number) => {
+		console.log(index, images)
+
 		setImages(images.filter(img => img.id !== index))
 		setPreviewImages(previewImages.filter(file => file.id !== index))
 	}
+
+	const translateFileToEng = (files: { image: File; id: number }[]) =>
+		files.map(file => ({
+			image: new File([file.image], slugify(file.image.name)),
+			id: file.id,
+		}))
+
 	return (
 		<div className='file-form-div'>
 			<label

@@ -1,11 +1,8 @@
 'use client'
 
 import CreateAddForm from '@/components/form/CreateAddForm'
-import { AddService } from '@/services/add'
-import { CategoryService } from '@/services/category'
 import { UploadService } from '@/services/upload'
-import { ICategory } from '@/types/category.interface'
-import { useEffect, useState } from 'react'
+import useSessionStore from '@/stores/sessionStore'
 import { useForm } from 'react-hook-form'
 import data from '../../constants/russia.json'
 
@@ -21,7 +18,7 @@ type FormFields = {
 }
 
 const CreateAdd = () => {
-	const [categories, setCategories] = useState<ICategory[]>([])
+	const { categories } = useSessionStore()
 
 	const {
 		register,
@@ -36,6 +33,7 @@ const CreateAdd = () => {
 		const images = getArrayStringImages(form.images)
 
 		if (!category && checkCityIncluding(form.city)) return 0
+		console.log(images)
 
 		const data = {
 			...form,
@@ -50,6 +48,8 @@ const CreateAdd = () => {
 	}
 
 	const getCategory = (subcategory: string) => {
+		console.log(subcategory)
+
 		return categories.find(category =>
 			category.subcategories.find(c => c.slug === subcategory)
 		)
@@ -63,6 +63,8 @@ const CreateAdd = () => {
 	}
 
 	const getArrayStringImages = (images: { id: number; image: File }[]) => {
+		console.log(images)
+
 		return images.map(image => image.image.name)
 	}
 
