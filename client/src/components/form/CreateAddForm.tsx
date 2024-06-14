@@ -1,3 +1,4 @@
+import useSessionStore from '@/stores/sessionStore'
 import { useEffect, useState } from 'react'
 import {
 	Control,
@@ -6,22 +7,29 @@ import {
 	SubmitHandler,
 	UseFormRegister,
 } from 'react-hook-form'
-import InputForm from '../input/inputForm/InputForm'
-import useSessionStore from '@/stores/sessionStore'
-import { CategorySelect } from '../select/categoryselect/CategorySelect'
-import { FileFormInput } from '../input/fileFormInput/FileFormInput'
 import data from '../../constants/russia.json'
+import { FileFormInput } from '../input/fileFormInput/FileFormInput'
+import InputForm from '../input/inputForm/InputForm'
+import { CategorySelect } from '../select/categoryselect/CategorySelect'
 
 type LoginFormType = {
 	errors: FieldErrors<any>
 	register: UseFormRegister<any>
 	onSubmit: SubmitHandler<any>
 	control: Control<any>
+	images: { id: number; image: File }[]
+	setImages: React.Dispatch<React.SetStateAction<{ id: number; image: File }[]>>
 }
 
-const LoginForm = ({ errors, register, onSubmit, control }: LoginFormType) => {
+const LoginForm = ({
+	errors,
+	register,
+	onSubmit,
+	control,
+	images,
+	setImages,
+}: LoginFormType) => {
 	const [isEditCity, setIsEditCity] = useState(false)
-	const [images, setImages] = useState<{ id: number; image: File }[]>([])
 	const [city, setCity] = useState('')
 	const [cities, setCities] = useState<{ region: string; city: string }[]>([])
 	const { categories } = useSessionStore()

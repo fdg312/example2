@@ -1,11 +1,12 @@
 'use client'
 
 import CreateAddForm from '@/components/form/CreateAddForm'
+import { AddService } from '@/services/add'
 import { UploadService } from '@/services/upload'
 import useSessionStore from '@/stores/sessionStore'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import data from '../../constants/russia.json'
-import { AddService } from '@/services/add'
 
 type FormFields = {
 	images: { id: number; image: File }[]
@@ -20,6 +21,7 @@ type FormFields = {
 
 const CreateAdd = () => {
 	const { categories } = useSessionStore()
+	const [images, setImages] = useState<{ id: number; image: File }[]>([])
 
 	const {
 		register,
@@ -31,18 +33,16 @@ const CreateAdd = () => {
 	const onSubmit = (form: FormFields) => {
 		const category = getCategory(form.subcategory)
 		UploadService.upload(getArrayFiles(form.images))
-		const images = getArrayStringImages(form.images)
+		const stringImages = getArrayStringImages(form.images)
 
 		if (!category && checkCityIncluding(form.city)) return
 
 		const data = {
 			...form,
-			images,
+			images: stringImages,
 			category: category?.slug,
 			price: +form.price,
 		}
-
-		console.log(data)
 
 		AddService.create(data)
 		reset()
@@ -81,6 +81,8 @@ const CreateAdd = () => {
 				onSubmit={handleSubmit(onSubmit)}
 				errors={errors}
 				control={control}
+				images={images}
+				setImages={setImages}
 			/>
 		</div>
 	)
