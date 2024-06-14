@@ -5,6 +5,7 @@ import { UploadService } from '@/services/upload'
 import useSessionStore from '@/stores/sessionStore'
 import { useForm } from 'react-hook-form'
 import data from '../../constants/russia.json'
+import { AddService } from '@/services/add'
 
 type FormFields = {
 	images: { id: number; image: File }[]
@@ -32,19 +33,19 @@ const CreateAdd = () => {
 		UploadService.upload(getArrayFiles(form.images))
 		const images = getArrayStringImages(form.images)
 
-		if (!category && checkCityIncluding(form.city)) return 0
-		console.log(images)
+		if (!category && checkCityIncluding(form.city)) return
 
 		const data = {
 			...form,
 			images,
-			category: category?.name,
+			category: category?.slug,
 			price: +form.price,
 		}
+
 		console.log(data)
 
-		// AddService.create(data)
-		// reset()
+		AddService.create(data)
+		reset()
 	}
 
 	const getCategory = (subcategory: string) => {
@@ -63,8 +64,6 @@ const CreateAdd = () => {
 	}
 
 	const getArrayStringImages = (images: { id: number; image: File }[]) => {
-		console.log(images)
-
 		return images.map(image => image.image.name)
 	}
 

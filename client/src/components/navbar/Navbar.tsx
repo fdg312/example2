@@ -4,7 +4,7 @@ import useAuth from '@/stores/authStore'
 import useSessionStore from '@/stores/sessionStore'
 import Image from 'next/image'
 import Link from 'next/link'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import avatar from '../../../public/ava.webp'
 import data from '../../constants/russia.json'
 import { Search } from '../search/Search'
@@ -170,7 +170,7 @@ const Navbar = () => {
 					) : (
 						<div className='flex items-center'>
 							<Link
-								href='/login'
+								href='/auth/login'
 								className='flex items-center text-[14px] ml-2 bg-[#7AC751] h-full px-4 text-white rounded-[10px] hover:bg-[#71bb49]'
 							>
 								Войти
