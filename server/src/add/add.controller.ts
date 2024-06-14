@@ -27,31 +27,29 @@ export class AddController {
 		@Query('search') text: string,
 		@Query('city') city: string
 	) {
-		console.log(city)
-
 		return await this.addService.getAll(take, text, city)
 	}
 
 	@UsePipes(new ValidationPipe())
 	@HttpCode(200)
 	@Get('/by-id/:id')
-	async getById(@Param('id') id: number) {
-		return await this.addService.getById(+id)
+	async getById(@Param('id') id: string) {
+		return await this.addService.getById(id)
 	}
 
 	@UsePipes(new ValidationPipe())
 	@HttpCode(200)
 	@Auth()
 	@Get('/by-user')
-	async getByUser(@CurrentUser('id') id: number) {
-		return await this.addService.getByUser(+id)
+	async getByUser(@CurrentUser('id') id: string) {
+		return await this.addService.getByUser(id)
 	}
 
 	@UsePipes(new ValidationPipe())
 	@HttpCode(200)
 	@Auth()
 	@Post()
-	async create(@CurrentUser('id') userId: number, @Body() dto: CreateAddDto) {
+	async create(@CurrentUser('id') userId: string, @Body() dto: CreateAddDto) {
 		return await this.addService.create(dto, userId)
 	}
 
@@ -59,7 +57,7 @@ export class AddController {
 	@HttpCode(200)
 	@Auth()
 	@Delete()
-	async delete(@CurrentUser('id') userId: number, @Body('id') id: number) {
+	async delete(@CurrentUser('id') userId: string, @Body('id') id: string) {
 		return await this.addService.delete(id, userId)
 	}
 
@@ -67,7 +65,7 @@ export class AddController {
 	@HttpCode(200)
 	@Auth()
 	@Get('/by-favourites')
-	async getByFavourites(@CurrentUser('id') userId: number) {
+	async getByFavourites(@CurrentUser('id') userId: string) {
 		return await this.addService.getByFavourites(userId)
 	}
 }

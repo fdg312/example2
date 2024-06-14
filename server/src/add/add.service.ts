@@ -1,21 +1,24 @@
-import { Injectable } from '@nestjs/common';
-import {PrismaService} from "../prisma.service";
-import {CreateAddDto} from "./create.dto";
-import { Add } from '@prisma/client'
-import { getSlugify } from 'src/config/slugify';
+import {
+	BadRequestException,
+	Injectable,
+	NotFoundException,
+} from '@nestjs/common'
+import { getSlugify } from 'src/config/slugify'
+import { PrismaService } from '../prisma.service'
+import { CreateAddDto } from './create.dto'
 
 @Injectable()
 export class AddService {
 	constructor(private readonly prisma: PrismaService) {}
 
-	async getAll(take: number = 10, text: string, city: string) {	
-		return await this.prisma.add.findMany({ 
+	async getAll(take: number = 10, text: string, city: string) {
+		return await this.prisma.add.findMany({
 			where: {
 				title: {
 					contains: text,
-					mode: 'insensitive'
+					mode: 'insensitive',
 				},
-				city
+				city,
 			},
 			// orderBy: {
 			// 	_relevance: {
@@ -26,43 +29,47 @@ export class AddService {
 			// },
 			include: {
 				category: true,
-				subcategory: true
+				subcategory: true,
 			},
-			take: +take })
+			take: +take,
+		})
 	}
 
-	async getById(id: number) {
-		return await this.prisma.add.findUnique({ where: { id },
+	async getById(id: string) {
+		return await this.prisma.add.findUnique({
+			where: { id },
 			include: {
 				user: true,
 				favourites: true,
 				category: true,
-				subcategory: true
-			}
+				subcategory: true,
+			},
 		})
 	}
 
-	async getByUser(id: number) {
-		return await this.prisma.add.findMany({ where: { 
-			user: { id }
-		 },
+	async getByUser(id: string) {
+		return await this.prisma.add.findMany({
+			where: {
+				user: { id },
+			},
 			include: {
-				user: true
-			}
+				user: true,
+			},
 		})
 	}
 
-	async getByFavourites(userId: number) {
-		return await this.prisma.add.findMany({ where: { 
-			favourites: { some: { userId } }
-		 },
+	async getByFavourites(userId: string) {
+		return await this.prisma.add.findMany({
+			where: {
+				favourites: { some: { userId } },
+			},
 			include: {
-				favourites: true
-			}
+				favourites: true,
+			},
 		})
 	}
 
-	async create(dto: CreateAddDto, id: number) {
+	async create(dto: CreateAddDto, id: string) {
 		return await this.prisma.add.create({
 			data: {
 				slug: getSlugify(dto.title),
@@ -75,25 +82,38 @@ export class AddService {
 				price: dto.price,
 				category: {
 					connect: {
-						name: dto.category
-					}
+						slug: dto.category,
+					},
 				},
 				subcategory: {
 					connect: {
-						slug: dto.subcategory
-					}
+						slug: dto.subcategory,
+					},
 				},
 				user: {
-					connect: { id }
-				}
-			}
+					connect: { id },
+				},
+			},
 		})
 	}
 
-	async delete (id: number, userId: number) {
-		return await this.prisma.add.delete({ where: { 
-			id, 
-			user: { id: userId }
-		} })
+	async delete(id: string, userId: string) {
+		const add = await this.prisma.add.findUnique({
+			where: {
+				id,
+			},
+		})
+
+		if (!add) throw new NotFoundException('Add not found')
+
+		if (add.userId !== userId)
+			throw new BadRequestException('You are not an owner of this add')
+
+		return await this.prisma.add.delete({
+			where: {
+				id,
+				user: { id: userId },
+			},
+		})
 	}
 }
