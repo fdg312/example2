@@ -1,13 +1,19 @@
 import { usePathname, useRouter } from 'next/navigation'
 import React, { useRef } from 'react'
+import { RxCross2 } from 'react-icons/rx'
 
 const Modal = ({ children }: { children: React.ReactNode }) => {
 	const modalRef = useRef<HTMLDivElement>(null)
+	const closeBtnRef = useRef<HTMLDivElement>(null)
 	const router = useRouter()
 	const pathname = usePathname()
 
 	const handleClose = (event: any) => {
-		if (modalRef.current && !modalRef.current.contains(event.target)) {
+		if (
+			modalRef.current &&
+			(!modalRef.current.contains(event.target) ||
+				closeBtnRef.current?.contains(event.target))
+		) {
 			if (pathname.split('/').includes('auth')) {
 				return router.push('/')
 			}
@@ -28,6 +34,12 @@ const Modal = ({ children }: { children: React.ReactNode }) => {
 					ref={modalRef}
 					className='relative bg-white rounded-lg overflow-hidden max-w-md min-w-[380px]'
 				>
+					<div
+						ref={closeBtnRef}
+						className='absolute top-3 right-3 bg-transparent border-0 cursor-pointer'
+					>
+						<RxCross2 className='text-5xl text-black' onClick={handleClose} />
+					</div>
 					{children}
 				</div>
 			</div>
