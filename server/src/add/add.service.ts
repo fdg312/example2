@@ -70,6 +70,12 @@ export class AddService {
 	}
 
 	async create(dto: CreateAddDto, id: string) {
+		const subcategory = await this.prisma.category.findFirst({
+			where: {
+				slug: dto.subcategory,
+			},
+		})
+
 		return await this.prisma.add.create({
 			data: {
 				slug: getSlugify(dto.title),
@@ -87,7 +93,7 @@ export class AddService {
 				},
 				subcategory: {
 					connect: {
-						slug: dto.subcategory,
+						id: subcategory.id,
 					},
 				},
 				user: {
