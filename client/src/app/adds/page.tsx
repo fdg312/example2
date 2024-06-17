@@ -7,6 +7,7 @@ import useSessionStore from '@/stores/sessionStore'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import data from '../../constants/russia.json'
+import { useRouter } from 'next/navigation'
 
 type FormFields = {
 	images: { id: number; image: File }[]
@@ -22,6 +23,7 @@ type FormFields = {
 const CreateAdd = () => {
 	const { categories } = useSessionStore()
 	const [images, setImages] = useState<{ id: number; image: File }[]>([])
+	const router = useRouter()
 
 	const {
 		register,
@@ -46,6 +48,7 @@ const CreateAdd = () => {
 
 		AddService.create(data)
 		reset()
+		router.push('/profile')
 	}
 
 	const getCategory = (subcategory: string) => {
