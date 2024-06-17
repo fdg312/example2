@@ -11,6 +11,7 @@ type FileFormInputProps = {
 	images: { image: File; id: number }[]
 	setImages: React.Dispatch<React.SetStateAction<{ image: File; id: number }[]>>
 	maxImages: number
+	maxSize?: number
 }
 
 export const FileFormInput = ({
@@ -20,6 +21,7 @@ export const FileFormInput = ({
 	images,
 	setImages,
 	maxImages,
+	maxSize = 0.001 * 1024 * 1024,
 }: FileFormInputProps) => {
 	const [previewImages, setPreviewImages] = useState<
 		{ image: string; id: number }[]
@@ -33,13 +35,20 @@ export const FileFormInput = ({
 		if (files!.length + images.length > maxImages) return
 
 		let imagesArr = images
+
 		if (files) {
+			const sizeImages = Array.from(files)?.reduce(
+				(total, file) => total + file.size,
+				0
+			)
+
+			if (sizeImages > maxSize) return
+
 			for (let i = 0; i < files.length; i++) {
 				let newId =
 					imagesArr.length != 0 ? imagesArr[imagesArr.length - 1]?.id + 1 : 0
 				imagesArr.push({ image: files[i], id: newId })
 			}
-			console.log(imagesArr)
 
 			setPreviewImages(
 				imagesArr.map(file => ({
@@ -48,7 +57,6 @@ export const FileFormInput = ({
 				}))
 			)
 			imagesArr = translateFileToEng(imagesArr)
-			console.log(imagesArr)
 			setImages(imagesArr)
 
 			return imagesArr
@@ -56,8 +64,6 @@ export const FileFormInput = ({
 	}
 
 	const removeImage = (index: number) => {
-		console.log(index, images)
-
 		setImages(images.filter(img => img.id !== index))
 		setPreviewImages(previewImages.filter(file => file.id !== index))
 	}
@@ -101,17 +107,23 @@ export const FileFormInput = ({
 					)}
 				/>
 				{errors.images && (
-					<p className='text-red-500 text-sm'>Некорректные фото</p>
+					<p className='text-red-500 text-sm'>Неккоректные файлы</p>
 				)}
 				<div className='flex wrap'>
 					{previewImages.map(file => (
-						<div className='relative inline-block' key={file.id}>
+						<div
+							className='relative inline-block w-[120px] h-[120px]'
+							key={file.id}
+						>
 							<Image
 								className='mr-2'
-								width={120}
-								height={120}
+								// width={120}
+								// height={120}
 								src={file.image}
 								alt='Image'
+								fill
+								sizes='(max-width: 120px) 120px, 100vw'
+								style={{ objectFit: 'cover' }}
 							/>
 							<button
 								onClick={() => removeImage(file.id)}
