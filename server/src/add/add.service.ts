@@ -6,6 +6,7 @@ import {
 import { getSlugify } from 'src/config/slugify'
 import { PrismaService } from '../prisma.service'
 import { CreateAddDto } from './create.dto'
+import { UpdateAddDto } from './update.dto'
 
 @Injectable()
 export class AddService {
@@ -76,7 +77,7 @@ export class AddService {
 			},
 		})
 
-		return await this.prisma.add.create({
+		const newAdd = await this.prisma.add.create({
 			data: {
 				slug: getSlugify(dto.title),
 				title: dto.title,
@@ -100,6 +101,39 @@ export class AddService {
 					connect: { id },
 				},
 			},
+		})
+
+		this.prisma.add.update({
+			where: {
+				id: newAdd.id,
+			},
+			data: {
+				slug: `${getSlugify(newAdd.title)}_${newAdd.id}`,
+			},
+		})
+	}
+
+	async update(id: string, dto: UpdateAddDto, userId: string) {
+		const add = await this.prisma.add.findUnique({
+			where: {
+				id,
+			},
+		})
+
+		if (!add) throw new NotFoundException('Add not found')
+
+		if (add.userId !== userId)
+			throw new BadRequestException('You are not an owner of this add')
+
+		const filteredAddData = Object.fromEntries(
+			Object.entries(dto).filter(([key, value]) => value !== add[key])
+		)
+
+		return await this.prisma.add.update({
+			where: {
+				id,
+			},
+			data: { ...filteredAddData, slug: `${getSlugify(dto.title)}_${add.id}` },
 		})
 	}
 

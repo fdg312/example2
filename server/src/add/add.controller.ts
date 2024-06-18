@@ -6,6 +6,7 @@ import {
 	HttpCode,
 	Param,
 	Post,
+	Put,
 	Query,
 	UsePipes,
 	ValidationPipe,
@@ -14,6 +15,7 @@ import { Auth } from '../auth/decorators/auth.decorator'
 import { CurrentUser } from '../auth/decorators/user.decorator'
 import { AddService } from './add.service'
 import { CreateAddDto } from './create.dto'
+import { UpdateAddDto } from './update.dto'
 
 @Controller('adds')
 export class AddController {
@@ -59,6 +61,18 @@ export class AddController {
 	@Delete()
 	async delete(@CurrentUser('id') userId: string, @Body('id') id: string) {
 		return await this.addService.delete(id, userId)
+	}
+
+	@UsePipes(new ValidationPipe())
+	@HttpCode(200)
+	@Auth()
+	@Put('/:id')
+	async update(
+		@CurrentUser('id') userId: string,
+		@Body() dto: UpdateAddDto,
+		@Param('id') id: string
+	) {
+		return await this.addService.update(id, dto, userId)
 	}
 
 	@UsePipes(new ValidationPipe())
