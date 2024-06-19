@@ -12,7 +12,7 @@ import { FileFormInput } from '../input/fileFormInput/FileFormInput'
 import InputForm from '../input/inputForm/InputForm'
 import { CategorySelect } from '../select/categoryselect/CategorySelect'
 
-type CreateAddFormType = {
+type UpdateAddFormType = {
 	errors: FieldErrors<any>
 	register: UseFormRegister<any>
 	onSubmit: SubmitHandler<any>
@@ -21,14 +21,14 @@ type CreateAddFormType = {
 	setImages: React.Dispatch<React.SetStateAction<{ id: number; image: File }[]>>
 }
 
-const CreateAddForm = ({
+const UpdateAddForm = ({
 	errors,
 	register,
 	onSubmit,
 	control,
 	images,
 	setImages,
-}: CreateAddFormType) => {
+}: UpdateAddFormType) => {
 	const [isEditCity, setIsEditCity] = useState(false)
 	const [city, setCity] = useState('')
 	const [cities, setCities] = useState<{ region: string; city: string }[]>([])
@@ -165,6 +165,7 @@ const CreateAddForm = ({
 								value={value}
 								styles='w-full'
 								onChange={onChange}
+								disabled={true}
 							/>
 						)}
 					/>
@@ -209,10 +210,10 @@ const CreateAddForm = ({
 				type='submit'
 				className='mb-3 flex w-full justify-center rounded-md bg-yellow-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-yellow-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
 			>
-				Создать объявление
+				Сохранить изменения
 			</button>
 		</form>
 	)
 }
 
-export default CreateAddForm
+export default UpdateAddForm

@@ -35,7 +35,6 @@ export default function Default() {
 
 		setLoading(false)
 	}, [searchParams, city])
-	console.log(previousPage)
 
 	return (
 		(!previousPage.length || previousPage.includes('/')) &&

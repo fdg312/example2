@@ -21,7 +21,7 @@ export const FileFormInput = ({
 	images,
 	setImages,
 	maxImages,
-	maxSize = 0.001 * 1024 * 1024,
+	maxSize = 30 * 1024 * 1024,
 }: FileFormInputProps) => {
 	const [previewImages, setPreviewImages] = useState<
 		{ image: string; id: number }[]

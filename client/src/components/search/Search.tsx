@@ -79,8 +79,9 @@ export const Search = () => {
 	return (
 		<div>
 			<CategorySelect
+				id='categorySelect'
 				categories={categories}
-				disabled={disabled}
+				disabled={false}
 				styles={styles.select}
 				value={selectValue}
 				onChange={e => setSelectValue(e.target.value)}
