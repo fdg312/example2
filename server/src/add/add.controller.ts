@@ -41,6 +41,13 @@ export class AddController {
 
 	@UsePipes(new ValidationPipe())
 	@HttpCode(200)
+	@Get('/by-slug/:slug')
+	async getBySlug(@Param('slug') slug: string) {
+		return await this.addService.getBySlug(slug)
+	}
+
+	@UsePipes(new ValidationPipe())
+	@HttpCode(200)
 	@Auth()
 	@Get('/by-user')
 	async getByUser(@CurrentUser('id') id: string) {

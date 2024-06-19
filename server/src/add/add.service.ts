@@ -36,6 +36,18 @@ export class AddService {
 		})
 	}
 
+	async getBySlug(slug: string) {
+		return await this.prisma.add.findUnique({
+			where: { slug },
+			include: {
+				user: true,
+				favourites: true,
+				category: true,
+				subcategory: true,
+			},
+		})
+	}
+
 	async getById(id: string) {
 		return await this.prisma.add.findUnique({
 			where: { id },

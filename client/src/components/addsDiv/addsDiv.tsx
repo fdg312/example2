@@ -34,7 +34,7 @@ export const AddsDiv = ({
 					<Link
 						key={add.id}
 						className='mb-3 mr-5 inline-flex relative'
-						href={'/adds/' + add.id}
+						href={'/adds/' + add.slug}
 					>
 						<ProductCard
 							title={add.title}

@@ -21,6 +21,16 @@ export const AddService = {
 		} catch (e) {}
 	},
 
+	async getBySlug(slug: string): Promise<IAddResponse> {
+		try {
+			const response = await instance.get('/adds/by-slug/' + slug)
+
+			return response.data
+		} catch (e) {
+			throw e
+		}
+	},
+
 	async getById(id: string): Promise<IAddResponse> {
 		try {
 			const response = await instance.get('/adds/by-id/' + id)
