@@ -8,6 +8,7 @@ import {
 import { JwtService } from '@nestjs/jwt'
 import { hash, verify } from 'argon2'
 import { MailService } from 'src/mail/mail.service'
+import { userSelect } from 'src/user/user.select'
 import { PrismaService } from '../prisma.service'
 import { AuthDto } from './auth.dto'
 import { Scheduler } from './scheduler'
@@ -60,6 +61,7 @@ export class AuthService {
 		await this.prisma.user.update({
 			where: { id: user.id },
 			data: { password: await hash(password), verificationCode: null },
+			select: userSelect,
 		})
 	}
 
