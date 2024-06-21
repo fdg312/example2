@@ -2,9 +2,11 @@ import { IAddResponse } from '@/types/add.interface'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Dispatch, SetStateAction } from 'react'
+import { FaPenToSquare } from 'react-icons/fa6'
 import Loader from '../../../public/loader2.gif'
 import { HeartIcon } from '../heartIcon/heartIcon'
 import { ProductCard } from '../productcard/ProductCard'
+import { FaPenSquare } from 'react-icons/fa'
 
 export const AddsDiv = ({
 	adds,
@@ -12,12 +14,14 @@ export const AddsDiv = ({
 	loading,
 	favourites,
 	setReload,
+	redaction = false,
 }: {
 	adds: Array<IAddResponse>
 	setLoading: Dispatch<SetStateAction<boolean>>
 	loading: boolean
 	favourites?: boolean
 	setReload?: any
+	redaction?: boolean
 }) => {
 	return (
 		<div className='adds'>
@@ -44,6 +48,11 @@ export const AddsDiv = ({
 						/>
 						{favourites && (
 							<HeartIcon setIsChanged={setReload} addId={String(add.id)} />
+						)}
+						{redaction && (
+							<Link href={'/adds/' + add.slug + '/update'}>
+								<FaPenSquare className='absolute top-2 right-2 text-blue-400 text-[30px] hover:text-blue-500' />
+							</Link>
 						)}
 					</Link>
 				))
