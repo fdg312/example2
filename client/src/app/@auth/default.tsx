@@ -38,7 +38,8 @@ export default function Default() {
 
 	return (
 		(!previousPage.length || previousPage.includes('/')) &&
-		!!pathname.split('/').includes('auth') && (
+		!!pathname.split('/').includes('auth') &&
+		(
 			<main className='container'>
 				<div className='wrapper mt-6'>
 					{adds ? (
