@@ -64,4 +64,12 @@ export const AddService = {
 			return response.data
 		} catch (e) {}
 	},
+
+	async update(data: any, id: string) {
+		try {
+			const response = await instance.put('/adds/' + id, data)
+
+			return response.data
+		} catch (e) {}
+	},
 }

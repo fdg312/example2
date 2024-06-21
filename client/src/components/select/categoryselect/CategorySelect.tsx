@@ -19,6 +19,7 @@ export const CategorySelect = ({
 	onChange,
 }: selectType) => {
 	const [isClicked, setIsClicked] = useState(false)
+	console.log(value, 'valueSelect')
 
 	return (
 		<select

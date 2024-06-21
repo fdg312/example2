@@ -8,7 +8,6 @@ import {
 	UseFormRegister,
 } from 'react-hook-form'
 import data from '../../constants/russia.json'
-import { FileFormInput } from '../input/fileFormInput/FileFormInput'
 import InputForm from '../input/inputForm/InputForm'
 import { CategorySelect } from '../select/categoryselect/CategorySelect'
 
@@ -19,6 +18,7 @@ type UpdateAddFormType = {
 	control: Control<any>
 	images: { id: number; image: File }[]
 	setImages: React.Dispatch<React.SetStateAction<{ id: number; image: File }[]>>
+	defaultCity: string | undefined
 }
 
 const UpdateAddForm = ({
@@ -26,11 +26,12 @@ const UpdateAddForm = ({
 	register,
 	onSubmit,
 	control,
+	defaultCity,
 	images,
 	setImages,
 }: UpdateAddFormType) => {
 	const [isEditCity, setIsEditCity] = useState(false)
-	const [city, setCity] = useState('')
+	const [city, setCity] = useState(defaultCity || '')
 	const [cities, setCities] = useState<{ region: string; city: string }[]>([])
 	const { categories } = useSessionStore()
 
@@ -165,7 +166,6 @@ const UpdateAddForm = ({
 								value={value}
 								styles='w-full'
 								onChange={onChange}
-								disabled={true}
 							/>
 						)}
 					/>
@@ -174,14 +174,14 @@ const UpdateAddForm = ({
 					)}
 				</div>
 			</div>
-			<FileFormInput
+			{/* <FileFormInput
 				errors={errors}
 				control={control}
 				label='Фото'
 				images={images}
 				setImages={setImages}
 				maxImages={8}
-			/>
+			/> */}
 			<div>
 				<label
 					htmlFor='text'

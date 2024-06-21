@@ -2,6 +2,7 @@
 
 import UpdateAddForm from '@/components/form/UpdateAddForm'
 import { AddService } from '@/services/add'
+import { IAddResponse } from '@/types/add.interface'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
@@ -16,8 +17,10 @@ type FormFields = {
 	subcategory: string
 }
 
-const UpdateAddPage = ({ params }: { params: { addId: string } }) => {
+const UpdateAddPage = ({ params }: { params: { slug: string } }) => {
 	const [images, setImages] = useState<{ id: number; image: File }[]>([])
+	const [add, setAdd] = useState<IAddResponse>()
+	console.log(params.slug)
 
 	const {
 		register,
@@ -30,12 +33,16 @@ const UpdateAddPage = ({ params }: { params: { addId: string } }) => {
 	} = useForm<FormFields>()
 
 	const onSubmit = (form: FormFields) => {
-		console.log(form)
+		form.price = +form.price
+		console.log(form, 'form')
+
+		add && AddService.update(form, add.id)
 	}
 
 	useEffect(() => {
 		async function fetchData() {
-			const add = await AddService.getById(params.addId)
+			const add = await AddService.getBySlug(params.slug)
+			setAdd(add)
 			console.log(add, 'add')
 
 			reset({
@@ -45,7 +52,7 @@ const UpdateAddPage = ({ params }: { params: { addId: string } }) => {
 				address: add.address,
 				city: add.city,
 				price: add.price,
-				subcategory: add.subcategory?.name,
+				subcategory: add.subcategory?.slug,
 			})
 			console.log(watch(), 'watch')
 		}
@@ -65,6 +72,7 @@ const UpdateAddPage = ({ params }: { params: { addId: string } }) => {
 				control={control}
 				images={images}
 				setImages={setImages}
+				defaultCity={add?.city}
 			/>
 		</div>
 	)

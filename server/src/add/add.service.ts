@@ -126,11 +126,14 @@ export class AddService {
 	}
 
 	async update(id: string, dto: UpdateAddDto, userId: string) {
+		console.log(dto, 'dto')
+
 		const add = await this.prisma.add.findUnique({
 			where: {
 				id,
 			},
 		})
+		console.log(add, 'add')
 
 		if (!add) throw new NotFoundException('Add not found')
 
@@ -138,14 +141,44 @@ export class AddService {
 			throw new BadRequestException('You are not an owner of this add')
 
 		const filteredAddData = Object.fromEntries(
-			Object.entries(dto).filter(([key, value]) => value !== add[key])
+			Object.entries(dto).filter(
+				([key, value]) => value !== add[key] && value !== 'subcategory'
+			)
 		)
+
+		if (dto.subcategory) {
+			var subcategory = await this.prisma.subcategory.findFirst({
+				where: {
+					slug: dto.subcategory,
+				},
+				include: {
+					category: true,
+				},
+			})
+
+			filteredAddData.subcategory = {
+				connect: {
+					id: subcategory?.id,
+				},
+			}
+
+			filteredAddData.category = {
+				connect: {
+					slug: subcategory?.category.slug,
+				},
+			}
+		}
+
+		console.log(filteredAddData, 'filteredAddData')
 
 		return await this.prisma.add.update({
 			where: {
 				id,
 			},
-			data: { ...filteredAddData, slug: `${getSlugify(dto.title)}_${add.id}` },
+			data: {
+				...filteredAddData,
+				slug: `${getSlugify(dto.title)}_${add.id}`,
+			},
 		})
 	}
 
