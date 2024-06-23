@@ -1,11 +1,9 @@
-import { AuthDto } from "src/auth/auth.dto";
+import { AuthDto } from 'src/auth/auth.dto'
 
-import {
-    IsArray,
-    IsOptional,
-  } from 'class-validator'
+import { IsOptional, IsString } from 'class-validator'
 
 export class UpdateUserDto extends AuthDto {
-    @IsOptional()
-    avatarPath: string
+	@IsOptional()
+	@IsString({ message: 'Must be a string' })
+	avatarPath: string
 }

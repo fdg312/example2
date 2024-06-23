@@ -1,33 +1,36 @@
 import {
+	IsEmail,
+	IsMobilePhone,
 	IsOptional,
 	IsString,
 	MaxLength,
 	MinLength,
-	ValidateIf,
 } from 'class-validator'
 
 export class AuthDto {
-	@IsOptional()
-	@IsString()
-	@ValidateIf(obj => !obj.phone)
+	@IsEmail({}, { message: 'Email должен быть валидным' })
 	email: string
 
-	@IsOptional()
-	@IsString()
-	@ValidateIf(obj => !obj.email)
-	phone: string
-
-	@IsOptional()
-	@MinLength(6, {
-		message: 'Password must be at least 6 characters long',
+	@MinLength(8, {
+		message: 'Пароль должен содержать не менее 8 символов',
 	})
 	@MaxLength(20, {
-		message: 'Password must be at most 20 characters long',
+		message: 'Пароль должен содержать не более 20 символов',
 	})
-	@IsString()
+	@IsString({ message: 'Пароль должен быть строкой' })
 	password: string
 
 	@IsOptional()
-	@IsString()
+	@IsMobilePhone(
+		'ru-RU',
+		{},
+		{ message: 'Номер телефона должен быть валидным' }
+	)
+	phone: string
+
+	@IsOptional()
+	@MinLength(3, { message: 'Имя должно содержать не менее 3 символов' })
+	@MaxLength(20, { message: 'Имя должно содержать не более 20 символов' })
+	@IsString({ message: 'Имя должно быть строкой' })
 	name: string
 }

@@ -27,7 +27,8 @@ const RegisterForm = ({ errors, register, onSubmit }: RegisterFormType) => {
 				label='Пароль'
 				register={register}
 				errors={errors}
-				minLength={3}
+				minLength={8}
+				maxLength={20}
 				required={true}
 			/>
 			<InputForm
@@ -45,6 +46,8 @@ const RegisterForm = ({ errors, register, onSubmit }: RegisterFormType) => {
 				type='text'
 				name='name'
 				label='ФИО'
+				minLength={3}
+				maxLength={20}
 				register={register}
 				errors={errors}
 				required={true}

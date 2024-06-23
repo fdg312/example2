@@ -32,7 +32,8 @@ const LoginForm = ({ errors, register, onSubmit }: LoginFormType) => {
 				label='Пароль'
 				register={register}
 				errors={errors}
-				minLength={3}
+				minLength={8}
+				maxLength={20}
 				required={true}
 			/>
 			<button className='bg-[#7AC751] hover:bg-[#71bb49] text-white font-bold py-2 px-4 rounded-[10px] mb-2'>

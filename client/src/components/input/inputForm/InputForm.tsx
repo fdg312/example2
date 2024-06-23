@@ -7,6 +7,7 @@ type InputType = {
 	register: any
 	label: string
 	minLength?: number
+	maxLength?: number
 	required?: boolean
 	pattern?: RegExp
 }
@@ -19,6 +20,7 @@ const InputForm = ({
 	label,
 	required,
 	minLength,
+	maxLength,
 	pattern,
 }: InputType) => {
 	return (
@@ -39,7 +41,11 @@ const InputForm = ({
 					},
 					minLength: {
 						value: minLength,
-						message: `Минимальная длина ${minLength} символа`,
+						message: `Минимальная длина ${minLength} символов`,
+					},
+					maxLength: {
+						value: maxLength,
+						message: `Максимальная длина ${maxLength} символов`,
 					},
 					pattern: { value: pattern, message: 'Некорректное значение' },
 				})}
