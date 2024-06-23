@@ -1,14 +1,12 @@
 import { AddService } from '@/services/add'
-import { CategoryService } from '@/services/category'
+import useSessionStore from '@/stores/sessionStore'
 import { IAdd } from '@/types/add.interface'
-import { ICategory } from '@/types/category.interface'
 import Link from 'next/link'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { SearchInput } from '../input/searchInput/SearchInput'
 import { CategorySelect } from '../select/categoryselect/CategorySelect'
 import styles from './search.module.scss'
-import useSessionStore from '@/stores/sessionStore'
 
 export const Search = () => {
 	const router = useRouter()
@@ -34,8 +32,6 @@ export const Search = () => {
 	// }, [])
 
 	useEffect(() => {
-		console.log('fetchData', 'search', 'searchValue')
-
 		if (!searchValue) {
 			setSearchRes([])
 			return
@@ -52,10 +48,9 @@ export const Search = () => {
 		setDisabled(true)
 		console.log('selectValue')
 
+		const category = getCategory(selectValue)?.slug
 		if (selectValue) {
-			router.push(
-				'/categories/' + getCategory(selectValue)?.slug + '/' + selectValue
-			)
+			router.push('/categories/' + category + '/' + selectValue)
 		}
 	}, [selectValue])
 
