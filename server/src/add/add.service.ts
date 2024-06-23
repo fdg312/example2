@@ -126,14 +126,11 @@ export class AddService {
 	}
 
 	async update(id: string, dto: UpdateAddDto, userId: string) {
-		console.log(dto, 'dto')
-
 		const add = await this.prisma.add.findUnique({
 			where: {
 				id,
 			},
 		})
-		console.log(add, 'add')
 
 		if (!add) throw new NotFoundException('Add not found')
 

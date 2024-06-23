@@ -6,10 +6,9 @@ type InputType = {
 	errors: FieldErrors<any>
 	register: any
 	label: string
-	minLength?: number
-	maxLength?: number
 	required?: boolean
 	pattern?: RegExp
+	registerFileds?: object
 }
 
 const InputForm = ({
@@ -19,8 +18,7 @@ const InputForm = ({
 	register,
 	label,
 	required,
-	minLength,
-	maxLength,
+	registerFileds,
 	pattern,
 }: InputType) => {
 	return (
@@ -39,15 +37,8 @@ const InputForm = ({
 						value: required == true,
 						message: 'Поле обязательно для заполнения',
 					},
-					minLength: {
-						value: minLength,
-						message: `Минимальная длина ${minLength} символов`,
-					},
-					maxLength: {
-						value: maxLength,
-						message: `Максимальная длина ${maxLength} символов`,
-					},
 					pattern: { value: pattern, message: 'Некорректное значение' },
+					registerFileds,
 				})}
 				className={
 					'block mt-2 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-yellow-300 sm:text-sm sm:leading-6 ' +

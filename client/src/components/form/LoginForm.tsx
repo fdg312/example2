@@ -1,11 +1,6 @@
-import {
-	FieldErrors,
-	SubmitHandler,
-	UseFormRegister,
-	UseFormReturn,
-} from 'react-hook-form'
-import InputForm from '../input/inputForm/InputForm'
 import Link from 'next/link'
+import { FieldErrors, SubmitHandler, UseFormRegister } from 'react-hook-form'
+import InputForm from '../input/inputForm/InputForm'
 
 type LoginFormType = {
 	errors: FieldErrors<any>
@@ -14,6 +9,16 @@ type LoginFormType = {
 }
 
 const LoginForm = ({ errors, register, onSubmit }: LoginFormType) => {
+	const inputRegisterProps = {
+		minLength: {
+			value: 3,
+			message: 'Минимальная длина 3 символа',
+		},
+		maxLength: {
+			value: 20,
+			message: 'Максимальная длина 20 символов',
+		},
+	}
 	return (
 		<form onSubmit={onSubmit} className='p-8'>
 			<h2 className='text-2xl mb-4'>Вход</h2>
@@ -32,9 +37,17 @@ const LoginForm = ({ errors, register, onSubmit }: LoginFormType) => {
 				label='Пароль'
 				register={register}
 				errors={errors}
-				minLength={8}
-				maxLength={20}
 				required={true}
+				registerFileds={{
+					minLength: {
+						value: 8,
+						message: 'Минимальная длина 8 символов',
+					},
+					maxLength: {
+						value: 20,
+						message: 'Максимальная длина 20 символов',
+					},
+				}}
 			/>
 			<button className='bg-[#7AC751] hover:bg-[#71bb49] text-white font-bold py-2 px-4 rounded-[10px] mb-2'>
 				Войти

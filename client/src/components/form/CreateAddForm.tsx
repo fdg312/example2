@@ -40,6 +40,17 @@ const CreateAddForm = ({
 	const [cities, setCities] = useState<{ region: string; city: string }[]>([])
 	const { categories } = useSessionStore()
 
+	const inputRegisterProps = {
+		minLength: {
+			value: 3,
+			message: 'Минимальная длина 3 символа',
+		},
+		maxLength: {
+			value: 20,
+			message: 'Максимальная длина 20 символов',
+		},
+	}
+
 	useEffect(() => {
 		if (!city && isEditCity) return
 		setCities(
@@ -68,8 +79,8 @@ const CreateAddForm = ({
 						label='Заголовок'
 						register={register}
 						errors={errors}
-						minLength={3}
 						required={true}
+						registerFileds={inputRegisterProps}
 					/>
 				</div>
 				<div className='w-1/2'>
@@ -99,6 +110,7 @@ const CreateAddForm = ({
 							id='city'
 							type='text'
 							{...register('city', {
+								...inputRegisterProps,
 								required: {
 									value: true,
 									message: 'Поле обязательно для заполнения',
@@ -142,8 +154,8 @@ const CreateAddForm = ({
 						label='Адрес'
 						register={register}
 						errors={errors}
-						minLength={3}
 						required={true}
+						registerFileds={inputRegisterProps}
 					/>
 				</div>
 			</div>
@@ -215,6 +227,14 @@ const CreateAddForm = ({
 							required: {
 								value: true,
 								message: 'Поле обязательно для заполнения',
+							},
+							minLength: {
+								value: 10,
+								message: 'Минимальная длина 10 символов',
+							},
+							maxLength: {
+								value: 1000,
+								message: 'Максимальная длина 1000 символов',
 							},
 						})}
 						className={

@@ -27,8 +27,16 @@ const RegisterForm = ({ errors, register, onSubmit }: RegisterFormType) => {
 				label='Пароль'
 				register={register}
 				errors={errors}
-				minLength={8}
-				maxLength={20}
+				registerFileds={{
+					minLength: {
+						value: 8,
+						message: 'Минимальная длина 8 символов',
+					},
+					maxLength: {
+						value: 20,
+						message: 'Максимальная длина 20 символов',
+					},
+				}}
 				required={true}
 			/>
 			<InputForm
@@ -46,8 +54,16 @@ const RegisterForm = ({ errors, register, onSubmit }: RegisterFormType) => {
 				type='text'
 				name='name'
 				label='ФИО'
-				minLength={3}
-				maxLength={20}
+				registerFileds={{
+					minLength: {
+						value: 3,
+						message: 'Минимальная длина 3 символа',
+					},
+					maxLength: {
+						value: 20,
+						message: 'Максимальная длина 20 символов',
+					},
+				}}
 				register={register}
 				errors={errors}
 				required={true}
