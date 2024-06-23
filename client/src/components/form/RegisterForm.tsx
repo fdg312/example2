@@ -19,7 +19,6 @@ const RegisterForm = ({ errors, register, onSubmit }: RegisterFormType) => {
 				pattern={/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i}
 				register={register}
 				errors={errors}
-				minLength={3}
 				required={true}
 			/>
 			<InputForm
@@ -35,10 +34,11 @@ const RegisterForm = ({ errors, register, onSubmit }: RegisterFormType) => {
 				type='phone'
 				name='phone'
 				label='Номер телефона'
-				pattern={/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i}
+				pattern={
+					/^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/
+				}
 				register={register}
 				errors={errors}
-				minLength={3}
 				required={true}
 			/>
 			<InputForm
@@ -47,7 +47,6 @@ const RegisterForm = ({ errors, register, onSubmit }: RegisterFormType) => {
 				label='ФИО'
 				register={register}
 				errors={errors}
-				minLength={3}
 				required={true}
 			/>
 			<button className='bg-[#7AC751] hover:bg-[#71bb49] text-white font-bold py-2 px-4 rounded-[10px] mb-2'>

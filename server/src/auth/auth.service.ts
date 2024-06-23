@@ -40,11 +40,7 @@ export class AuthService {
 		)
 	}
 
-	async verifyCode(
-		email: string,
-		password: string,
-		code: string
-	): Promise<void> {
+	async verifyCode(email: string, password: string, code: string) {
 		const user = await this.prisma.user.findUnique({ where: { email } })
 
 		if (!user || user.verificationCode !== +code)

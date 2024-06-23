@@ -47,7 +47,7 @@ export default function Home() {
 					Нет объявлений
 				</h2>
 			)}
-			<div className='flex flex-wrap justify-center'>
+			<div className='flex flex-wrap justify-start'>
 				<AddsDiv
 					redaction={true}
 					loading={loading}

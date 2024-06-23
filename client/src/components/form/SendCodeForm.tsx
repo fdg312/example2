@@ -1,9 +1,4 @@
-import {
-	FieldErrors,
-	SubmitHandler,
-	UseFormRegister,
-	UseFormReturn,
-} from 'react-hook-form'
+import { FieldErrors, SubmitHandler, UseFormRegister } from 'react-hook-form'
 import InputForm from '../input/inputForm/InputForm'
 
 type SendCodeFormType = {
@@ -22,8 +17,8 @@ const SendCodeForm = ({ errors, register, onSubmit }: SendCodeFormType) => {
 				label='Почта'
 				register={register}
 				errors={errors}
-				minLength={3}
 				required={true}
+				pattern={/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i}
 			/>
 			<button className='bg-[#7AC751] hover:bg-[#71bb49] text-white font-bold py-2 px-4 rounded-[10px] mb-2'>
 				Отправить код

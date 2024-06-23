@@ -43,7 +43,6 @@ const UpdateAddPage = ({ params }: { params: { slug: string } }) => {
 		async function fetchData() {
 			const add = await AddService.getBySlug(params.slug)
 			setAdd(add)
-			console.log(add, 'add')
 
 			reset({
 				phone: add.phone,

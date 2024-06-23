@@ -21,8 +21,9 @@ const ResetPasswordForm = ({
 				label='Код'
 				register={register}
 				errors={errors}
-				minLength={3}
+				minLength={6}
 				required={true}
+				pattern={/^[0-9]{6}$/}
 			/>
 			<InputForm
 				type='text'

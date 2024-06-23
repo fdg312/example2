@@ -74,7 +74,9 @@ const UpdateAddForm = ({
 						label='Телефон'
 						register={register}
 						errors={errors}
-						minLength={3}
+						pattern={
+							/^(\+7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/
+						}
 						required={true}
 					/>
 				</div>
@@ -92,7 +94,10 @@ const UpdateAddForm = ({
 							id='city'
 							type='text'
 							{...register('city', {
-								required: true,
+								required: {
+									value: true,
+									message: 'Поле обязательно для заполнения',
+								},
 							})}
 							onChange={e => {
 								setIsEditCity(true)
@@ -106,7 +111,9 @@ const UpdateAddForm = ({
 							}
 						/>
 						{errors.city && (
-							<p className='text-red-500 text-sm'>Некорректный город</p>
+							<p className='text-red-500 text-sm'>
+								{errors.city.message as string}
+							</p>
 						)}
 						{isEditCity && (
 							<div className='absolute top-[28px] w-full left-0 ps-3 bg-white'>
@@ -158,7 +165,9 @@ const UpdateAddForm = ({
 					<Controller
 						control={control}
 						name='subcategory'
-						rules={{ required: true }}
+						rules={{
+							required: { value: true, message: 'Это поле обязательно' },
+						}}
 						render={({ field: { onChange, value } }) => (
 							<CategorySelect
 								id='subcategory'
@@ -170,7 +179,9 @@ const UpdateAddForm = ({
 						)}
 					/>
 					{errors.subcategory && (
-						<p className='text-red-500 text-sm'>Неправильная категория</p>
+						<p className='text-red-500 text-sm'>
+							{errors.subcategory.message as string}
+						</p>
 					)}
 				</div>
 			</div>
@@ -193,7 +204,10 @@ const UpdateAddForm = ({
 					<textarea
 						id='text'
 						{...register('text', {
-							required: true,
+							required: {
+								value: true,
+								message: 'Поле обязательно для заполнения',
+							},
 						})}
 						className={
 							'block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-yellow-300 sm:text-sm sm:leading-6 ' +
@@ -202,7 +216,9 @@ const UpdateAddForm = ({
 						}
 					/>
 					{errors.text && (
-						<p className='text-red-500 text-sm'>Некорректное описание</p>
+						<p className='text-red-500 text-sm'>
+							{errors.text.message as string}
+						</p>
 					)}
 				</div>
 			</div>

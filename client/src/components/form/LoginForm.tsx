@@ -24,7 +24,6 @@ const LoginForm = ({ errors, register, onSubmit }: LoginFormType) => {
 				pattern={/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i}
 				register={register}
 				errors={errors}
-				minLength={3}
 				required={true}
 			/>
 			<InputForm

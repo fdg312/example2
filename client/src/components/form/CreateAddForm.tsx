@@ -6,6 +6,8 @@ import {
 	FieldErrors,
 	SubmitHandler,
 	UseFormRegister,
+	UseFormSetError,
+	UseFormSetValue,
 } from 'react-hook-form'
 import data from '../../constants/russia.json'
 import { FileFormInput } from '../input/fileFormInput/FileFormInput'
@@ -19,6 +21,8 @@ type CreateAddFormType = {
 	control: Control<any>
 	images: { id: number; image: File }[]
 	setImages: React.Dispatch<React.SetStateAction<{ id: number; image: File }[]>>
+	setValue: UseFormSetValue<any>
+	setError: UseFormSetError<any>
 }
 
 const CreateAddForm = ({
@@ -28,6 +32,8 @@ const CreateAddForm = ({
 	control,
 	images,
 	setImages,
+	setValue,
+	setError,
 }: CreateAddFormType) => {
 	const [isEditCity, setIsEditCity] = useState(false)
 	const [city, setCity] = useState('')
@@ -73,8 +79,10 @@ const CreateAddForm = ({
 						label='Телефон'
 						register={register}
 						errors={errors}
-						minLength={3}
 						required={true}
+						pattern={
+							/^(\+7|7|8)?[\s\-]?\(?[489][0-9]{2}\)?[\s\-]?[0-9]{3}[\s\-]?[0-9]{2}[\s\-]?[0-9]{2}$/
+						}
 					/>
 				</div>
 			</div>
@@ -91,7 +99,10 @@ const CreateAddForm = ({
 							id='city'
 							type='text'
 							{...register('city', {
-								required: true,
+								required: {
+									value: true,
+									message: 'Поле обязательно для заполнения',
+								},
 							})}
 							onChange={e => {
 								setIsEditCity(true)
@@ -105,7 +116,9 @@ const CreateAddForm = ({
 							}
 						/>
 						{errors.city && (
-							<p className='text-red-500 text-sm'>Некорректный город</p>
+							<p className='text-red-500 text-sm'>
+								{errors.city.message as string}
+							</p>
 						)}
 						{isEditCity && (
 							<div className='absolute top-[28px] w-full left-0 ps-3 bg-white'>
@@ -157,7 +170,9 @@ const CreateAddForm = ({
 					<Controller
 						control={control}
 						name='subcategory'
-						rules={{ required: true }}
+						rules={{
+							required: { value: true, message: 'Это поле обязательно' },
+						}}
 						render={({ field: { onChange, value } }) => (
 							<CategorySelect
 								id='subcategory'
@@ -169,7 +184,9 @@ const CreateAddForm = ({
 						)}
 					/>
 					{errors.subcategory && (
-						<p className='text-red-500 text-sm'>Неправильная категория</p>
+						<p className='text-red-500 text-sm'>
+							{errors.subcategory.message as string}
+						</p>
 					)}
 				</div>
 			</div>
@@ -180,6 +197,9 @@ const CreateAddForm = ({
 				images={images}
 				setImages={setImages}
 				maxImages={8}
+				required={true}
+				setValue={setValue}
+				setError={setError}
 			/>
 			<div>
 				<label
@@ -192,7 +212,10 @@ const CreateAddForm = ({
 					<textarea
 						id='text'
 						{...register('text', {
-							required: true,
+							required: {
+								value: true,
+								message: 'Поле обязательно для заполнения',
+							},
 						})}
 						className={
 							'block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-yellow-300 sm:text-sm sm:leading-6 ' +
@@ -201,7 +224,9 @@ const CreateAddForm = ({
 						}
 					/>
 					{errors.text && (
-						<p className='text-red-500 text-sm'>Некорректное описание</p>
+						<p className='text-red-500 text-sm'>
+							{errors.text.message as string}
+						</p>
 					)}
 				</div>
 			</div>

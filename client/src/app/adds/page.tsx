@@ -1,8 +1,6 @@
 'use client'
 
 import CreateAddForm from '@/components/form/CreateAddForm'
-import { AddService } from '@/services/add'
-import { UploadService } from '@/services/upload'
 import useSessionStore from '@/stores/sessionStore'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -30,25 +28,29 @@ const CreateAdd = () => {
 		handleSubmit,
 		control,
 		reset,
+		setValue,
+		setError,
 		formState: { errors },
 	} = useForm<FormFields>()
 	const onSubmit = (form: FormFields) => {
-		const category = getCategory(form.subcategory)
-		UploadService.upload(getArrayFiles(form.images))
-		const stringImages = getArrayStringImages(form.images)
+		console.log(form)
 
-		if (!category && checkCityIncluding(form.city)) return
+		// const category = getCategory(form.subcategory)
+		// UploadService.upload(getArrayFiles(form.images))
+		// const stringImages = getArrayStringImages(form.images)
 
-		const data = {
-			...form,
-			images: stringImages,
-			category: category?.slug,
-			price: +form.price,
-		}
+		// if (!category && checkCityIncluding(form.city)) return
 
-		AddService.create(data)
-		reset()
-		router.push('/profile')
+		// const data = {
+		// 	...form,
+		// 	images: stringImages,
+		// 	category: category?.slug,
+		// 	price: +form.price,
+		// }
+
+		// AddService.create(data)
+		// reset()
+		// router.push('/profile')
 	}
 
 	const getCategory = (subcategory: string) => {
@@ -86,6 +88,8 @@ const CreateAdd = () => {
 				control={control}
 				images={images}
 				setImages={setImages}
+				setValue={setValue}
+				setError={setError}
 			/>
 		</div>
 	)

@@ -1,6 +1,12 @@
 import Image from 'next/image'
 import { useRef, useState } from 'react'
-import { Control, Controller, FieldErrors } from 'react-hook-form'
+import {
+	Control,
+	Controller,
+	FieldErrors,
+	UseFormSetError,
+	UseFormSetValue,
+} from 'react-hook-form'
 import slugify from 'slugify'
 import styles from './fileforminput.module.scss'
 
@@ -11,7 +17,10 @@ type FileFormInputProps = {
 	images: { image: File; id: number }[]
 	setImages: React.Dispatch<React.SetStateAction<{ image: File; id: number }[]>>
 	maxImages: number
+	setValue: UseFormSetValue<any>
+	setError: UseFormSetError<any>
 	maxSize?: number
+	required?: boolean
 }
 
 export const FileFormInput = ({
@@ -21,6 +30,9 @@ export const FileFormInput = ({
 	images,
 	setImages,
 	maxImages,
+	setValue,
+	setError,
+	required = false,
 	maxSize = 30 * 1024 * 1024,
 }: FileFormInputProps) => {
 	const [previewImages, setPreviewImages] = useState<
@@ -42,7 +54,13 @@ export const FileFormInput = ({
 				0
 			)
 
-			if (sizeImages > maxSize) return
+			if (sizeImages > maxSize) {
+				setError('images', {
+					type: 'custom',
+					message: 'Можно загружать только до 30 МБ',
+				})
+				return
+			}
 
 			for (let i = 0; i < files.length; i++) {
 				let newId =
@@ -64,6 +82,10 @@ export const FileFormInput = ({
 	}
 
 	const removeImage = (index: number) => {
+		setValue(
+			'images',
+			images.filter(img => img.id !== index)
+		)
 		setImages(images.filter(img => img.id !== index))
 		setPreviewImages(previewImages.filter(file => file.id !== index))
 	}
@@ -86,9 +108,13 @@ export const FileFormInput = ({
 				<Controller
 					control={control}
 					name='images'
+					rules={{
+						required: required === true ? 'Это поле обязательно' : false,
+					}}
 					render={({ field: { onChange } }) => (
 						<div className={styles['file-form-input']}>
 							<input
+								disabled={maxImages === images.length}
 								style={{ display: 'none' }}
 								accept='image/*'
 								id='images'
@@ -106,9 +132,6 @@ export const FileFormInput = ({
 						</div>
 					)}
 				/>
-				{errors.images && (
-					<p className='text-red-500 text-sm'>Неккоректные файлы</p>
-				)}
 				<div className='flex wrap'>
 					{previewImages.map(file => (
 						<div
@@ -134,6 +157,11 @@ export const FileFormInput = ({
 						</div>
 					))}
 				</div>
+				{errors.images && (
+					<p className='text-red-500 text-sm'>
+						{errors.images.message as string}
+					</p>
+				)}
 			</div>
 		</div>
 	)
