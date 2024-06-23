@@ -1,35 +1,37 @@
+import { AddService } from '@/services/add'
 import { CategoryService } from '@/services/category'
+import { IAdd } from '@/types/add.interface'
 import { ICategory } from '@/types/category.interface'
+import Link from 'next/link'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { SearchInput } from '../input/searchInput/SearchInput'
-import styles from './search.module.scss'
-import Link from 'next/link'
-import { AddService } from '@/services/add'
-import { IAdd } from '@/types/add.interface'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { CategorySelect } from '../select/categoryselect/CategorySelect'
+import styles from './search.module.scss'
+import useSessionStore from '@/stores/sessionStore'
 
 export const Search = () => {
 	const router = useRouter()
 	const searchParams = useSearchParams()
 	const pathname = usePathname()
 
-	const [categories, setCategories] = useState<ICategory[]>([])
+	const { categories } = useSessionStore()
+	// const [categories, setCategories] = useState<ICategory[]>([])
 	const [selectValue, setSelectValue] = useState('')
 	const [searchValue, setSearchValue] = useState('')
 	const [disabled, setDisabled] = useState(false)
 	const [searchRes, setSearchRes] = useState([])
 
-	useEffect(() => {
-		console.log('fetchData', 'search', 'categories')
+	// useEffect(() => {
+	// 	console.log('fetchData', 'search', 'categories')
 
-		async function fetchData() {
-			const data = await CategoryService.getAll()
-			data && setCategories(data)
-		}
+	// 	async function fetchData() {
+	// 		const data = await CategoryService.getAll()
+	// 		data && setCategories(data)
+	// 	}
 
-		fetchData()
-	}, [])
+	// 	fetchData()
+	// }, [])
 
 	useEffect(() => {
 		console.log('fetchData', 'search', 'searchValue')
@@ -58,8 +60,6 @@ export const Search = () => {
 	}, [selectValue])
 
 	useEffect(() => {
-		console.log('searchParams, pathname')
-
 		if (pathname.split('/')[1] == 'categories') {
 			setSelectValue(pathname.split('/')[pathname.split('/').length - 1])
 			return
@@ -71,6 +71,9 @@ export const Search = () => {
 	}, [searchParams, pathname])
 
 	const getCategory = (subcategory: string) => {
+		console.log(subcategory)
+		console.log(categories)
+
 		return categories?.find(category =>
 			category.subcategories.find(c => c.slug === subcategory)
 		)

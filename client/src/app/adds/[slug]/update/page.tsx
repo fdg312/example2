@@ -34,7 +34,6 @@ const UpdateAddPage = ({ params }: { params: { slug: string } }) => {
 
 	const onSubmit = (form: FormFields) => {
 		form.price = +form.price
-		console.log(form, 'form')
 
 		add && AddService.update(form, add.id)
 	}

@@ -9,21 +9,21 @@ import { Mulish } from 'next/font/google'
 
 const mulish = Mulish({ subsets: ['cyrillic'] })
 
-const CategoryPage = ({ params }) => {
+const CategoryPage = ({ params }: { params: { slug: string[] } }) => {
 	const [adds, setAdds] = useState<IAddResponse[]>([])
 	const [loading, setLoading] = useState(true)
 	console.log(params, 'params')
 
-	// useEffect(() => {
-	// 	async function fetchData() {
-	// 		const data = await CategoryService.getBySlug(params.slug[1])
+	useEffect(() => {
+		async function fetchData() {
+			const data = await CategoryService.getBySlug(params.slug[1])
 
-	// 		setAdds(data)
-	// 	}
+			setAdds(data)
+		}
 
-	// 	fetchData()
-	// 	setLoading(false)
-	// }, [])
+		fetchData()
+		setLoading(false)
+	}, [])
 
 	return (
 		<main className='container'>
