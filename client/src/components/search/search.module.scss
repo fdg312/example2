@@ -1,0 +1,16 @@
+.select {
+    margin-right: 10px;
+    border: 2px solid #7AC751;
+    height: 100%;
+    border-radius: 10px;
+    &:focus {
+        box-shadow: none;
+        border: 2px solid #7AC751;
+    }
+    &::placeholder {
+        color: #B0B0B0;
+    }
+    ::-ms-input-placeholder {
+        color: #B0B0B0;
+    }
+}

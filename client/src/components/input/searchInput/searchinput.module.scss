@@ -1,0 +1,29 @@
+.input {
+    width: 100%;
+    border: 2px solid #7AC751;
+    border-radius: 10px;
+    padding: 15px 25px;
+    &:focus {
+        box-shadow: none;
+        border: 2px solid #7AC751;
+    }
+    &::placeholder {
+        color: #B0B0B0;
+    }
+    ::-ms-input-placeholder {
+        color: #B0B0B0;
+    }
+}
+
+.search {
+    @extend .input;
+    border-right: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    &:focus {
+        border-right: 0;
+    }
+}
+
+
+
