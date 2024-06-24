@@ -62,10 +62,13 @@ const CreateAdd = () => {
 	}
 
 	const checkCityIncluding = (target: string) => {
-		return (
-			data.filter(obj => obj.city.toLowerCase().includes(target.toLowerCase()))
-				.length == 1
+		const filteredData = data.filter(obj =>
+			obj.city.toLowerCase().includes(target.toLowerCase())
 		)
+
+		if (filteredData.length === 1) {
+			return target === filteredData[0].city
+		}
 	}
 
 	const getArrayStringImages = (images: { id: number; image: File }[]) => {

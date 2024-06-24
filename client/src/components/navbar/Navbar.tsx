@@ -4,7 +4,7 @@ import useAuth from '@/stores/authStore'
 import useSessionStore from '@/stores/sessionStore'
 import Image from 'next/image'
 import Link from 'next/link'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import avatar from '../../../public/ava.webp'
 import data from '../../constants/russia.json'
 import { Search } from '../search/Search'
@@ -20,14 +20,15 @@ const Navbar = () => {
 	const inputCityRef = React.useRef<HTMLInputElement>(null)
 	const divCitiesRef = React.useRef<HTMLDivElement>(null)
 
-	const getInputCity = useCallback(() => {
-		if (!inputCity) return
-		setCities(
-			data
-				.filter(obj => obj.city.toLowerCase().includes(inputCity.toLowerCase()))
-				.slice(0, 3)
-		)
-	}, [inputCity])
+	// const getInputCity = useCallback(() => {
+
+	// 	console.log(
+	// 		inputCity,
+	// 		data
+	// 			.filter(obj => obj.city.toLowerCase().includes(inputCity.toLowerCase()))
+	// 			.slice(0, 3)
+	// 	)
+	// }, [inputCity])
 
 	useEffect(() => {
 		if (localStorage.getItem('city')) {
@@ -39,22 +40,49 @@ const Navbar = () => {
 			)
 		}
 
-		getInputCity()
+		// getInputCity()
 	}, [])
 
-	// useEffect(() => {
-	// 	if (isEditCity) {
-	// 		inputCityRef.current?.focus()
-	// 	} else {
-	// 		setInputCity('')
-	// 		setCities([])
-	// 		setCity(localStorage.getItem('city') ?? 'Россия')
-	// 	}
-	// }, [isEditCity])
+	const checkCityIncluding = (target: string) => {
+		const filteredData = data.filter(obj =>
+			obj.city.toLowerCase().includes(target.toLowerCase())
+		)
+
+		if (filteredData.length === 1) {
+			return target === filteredData[0].city
+		}
+	}
+
+	useEffect(() => {
+		if (isEditCity) {
+			inputCityRef.current?.focus()
+		}
+	}, [isEditCity])
 
 	const handleChangeCity = (target: string) => {
-		setCity(target)
-		setIsEditCity(false)
+		if (!target) return
+		setInputCity(target)
+		setCities(
+			data
+				.filter(obj => obj.city.toLowerCase().includes(inputCity.toLowerCase()))
+				.slice(0, 3)
+		)
+		if (checkCityIncluding(target) || target === 'Россия') {
+			setIsEditCity(false)
+			setInputCity(target === 'Россия' ? '' : target)
+			setCity(target)
+			return
+		}
+	}
+
+	const handleBlurCity = (e: React.FocusEvent) => {
+		setTimeout(() => {
+			if (!isEditCity) {
+				setCity('Россия')
+				setInputCity('')
+			}
+			setIsEditCity(false)
+		}, 100)
 	}
 
 	return (
@@ -70,7 +98,8 @@ const Navbar = () => {
 										className='block h-[30px]'
 										placeholder='Поиск города'
 										type='text'
-										onChange={e => setInputCity(e.target.value)}
+										onChange={e => handleChangeCity(e.target.value)}
+										onBlur={e => handleBlurCity(e)}
 										value={inputCity}
 									/>
 									{cities && (
@@ -82,6 +111,7 @@ const Navbar = () => {
 												onClick={() => {
 													handleChangeCity('Россия')
 													setInputCity('')
+													setIsEditCity(false)
 												}}
 												className=' border-[#555555] border-b-2 block cursor-pointer'
 											>
@@ -90,8 +120,9 @@ const Navbar = () => {
 											{cities?.map(obj => (
 												<p
 													onClick={() => {
-														setInputCity(obj.city)
+														// setInputCity(obj.city)
 														handleChangeCity(obj.city)
+														// setIsEditCity(false)
 													}}
 													key={obj.city}
 													className='cursor-pointer border-[#555555] border-b-2 block'
@@ -107,7 +138,7 @@ const Navbar = () => {
 									className='text-white underline decoration-dashed underline-offset-4 cursor-pointer'
 									onClick={() => setIsEditCity(true)}
 								>
-									{city != '' ? city : 'Выберите город'}
+									{city !== '' ? city : 'Выберите город'}
 								</h2>
 							)}
 						</div>

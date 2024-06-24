@@ -1,5 +1,5 @@
 import useSessionStore from '@/stores/sessionStore'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
 	Control,
 	Controller,
@@ -66,6 +66,32 @@ const CreateAddForm = ({
 		setCities([])
 	}
 
+	const checkCityIncluding = (target: string) => {
+		const filteredData = data.filter(obj =>
+			obj.city.toLowerCase().includes(target.toLowerCase())
+		)
+
+		if (filteredData.length === 1) {
+			return target === filteredData[0].city
+		}
+	}
+
+	const handleChangeCity = (target: string) => {
+		if (checkCityIncluding(target)) {
+			setIsEditCity(false)
+			setCity(target)
+			return
+		}
+		setIsEditCity(true)
+		setCity(target)
+	}
+
+	const handleBlurCity = (e: React.FocusEvent) => {
+		setTimeout(() => {
+			setIsEditCity(false)
+		}, 100)
+	}
+
 	return (
 		<form
 			onSubmit={onSubmit}
@@ -116,10 +142,8 @@ const CreateAddForm = ({
 									message: 'Поле обязательно для заполнения',
 								},
 							})}
-							onChange={e => {
-								setIsEditCity(true)
-								setCity(e.target.value)
-							}}
+							onChange={e => handleChangeCity(e.target.value)}
+							onBlur={e => handleBlurCity(e)}
 							value={city}
 							className={
 								'block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-yellow-300 sm:text-sm sm:leading-6 ' +
@@ -138,7 +162,7 @@ const CreateAddForm = ({
 									<p
 										onClick={() => handleClickChangeCity(obj.city)}
 										key={obj.city}
-										className='cursor-pointer border-[#555555] border-b-2 block'
+										className='city cursor-pointer border-[#555555] border-b-2 block'
 									>
 										{obj.city}
 									</p>

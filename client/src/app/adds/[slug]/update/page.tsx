@@ -52,8 +52,8 @@ const UpdateAddPage = ({ params }: { params: { slug: string } }) => {
 				price: add.price,
 				subcategory: add.subcategory?.slug,
 			})
-			console.log(watch(), 'watch')
 		}
+		console.log(watch(), 'watch')
 
 		fetchData()
 	}, [])
@@ -70,7 +70,6 @@ const UpdateAddPage = ({ params }: { params: { slug: string } }) => {
 				control={control}
 				images={images}
 				setImages={setImages}
-				defaultCity={add?.city}
 			/>
 		</div>
 	)

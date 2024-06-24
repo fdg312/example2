@@ -6,6 +6,7 @@ import useSessionStore from '@/stores/sessionStore'
 import { Mulish } from 'next/font/google'
 import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import data from '../constants/russia.json'
 
 const mulish = Mulish({ subsets: ['cyrillic'] })
 
@@ -27,12 +28,24 @@ export default function Default() {
 
 		useSessionStore.subscribe((state, prevState) => {
 			if (state.city !== prevState.city) {
-				fetchData(state.city)
+				if (checkCityIncluding(state.city)) {
+					fetchData(state.city)
+				}
 			}
 		})
 
 		setLoading(false)
 	}, [searchParams, city])
+
+	const checkCityIncluding = (target: string) => {
+		const filteredData = data.filter(obj =>
+			obj.city.toLowerCase().includes(target.toLowerCase())
+		)
+
+		if (filteredData.length === 1) {
+			return target === filteredData[0].city
+		}
+	}
 
 	return (
 		<main className='container'>

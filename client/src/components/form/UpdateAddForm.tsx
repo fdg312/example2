@@ -18,7 +18,6 @@ type UpdateAddFormType = {
 	control: Control<any>
 	images: { id: number; image: File }[]
 	setImages: React.Dispatch<React.SetStateAction<{ id: number; image: File }[]>>
-	defaultCity: string | undefined
 }
 
 const UpdateAddForm = ({
@@ -26,12 +25,11 @@ const UpdateAddForm = ({
 	register,
 	onSubmit,
 	control,
-	defaultCity,
 	images,
 	setImages,
 }: UpdateAddFormType) => {
 	const [isEditCity, setIsEditCity] = useState(false)
-	const [city, setCity] = useState(defaultCity || '')
+	const [city, setCity] = useState('')
 	const [cities, setCities] = useState<{ region: string; city: string }[]>([])
 	const { categories } = useSessionStore()
 
@@ -56,9 +54,41 @@ const UpdateAddForm = ({
 	}, [city])
 
 	const handleClickChangeCity = (target: string) => {
+		console.log(333)
+
 		setIsEditCity(false)
 		setCity(target)
 		setCities([])
+	}
+
+	const checkCityIncluding = (target: string) => {
+		const filteredData = data.filter(obj =>
+			obj.city.toLowerCase().includes(target.toLowerCase())
+		)
+
+		if (filteredData.length === 1) {
+			return target === filteredData[0].city
+		}
+	}
+
+	const handleChangeCity = (target: string) => {
+		console.log(123)
+
+		if (checkCityIncluding(target)) {
+			setIsEditCity(false)
+			setCity(target)
+			return
+		}
+		setIsEditCity(true)
+		setCity(target)
+	}
+
+	const handleBlurCity = (e: React.FocusEvent) => {
+		console.log(321)
+
+		setTimeout(() => {
+			setIsEditCity(false)
+		}, 100)
 	}
 
 	return (
@@ -111,10 +141,8 @@ const UpdateAddForm = ({
 								},
 								...inputRegisterProps,
 							})}
-							onChange={e => {
-								setIsEditCity(true)
-								setCity(e.target.value)
-							}}
+							onChange={e => handleChangeCity(e.target.value)}
+							onBlur={e => handleBlurCity(e)}
 							value={city}
 							className={
 								'block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-yellow-300 sm:text-sm sm:leading-6 ' +
