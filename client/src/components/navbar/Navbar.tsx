@@ -184,18 +184,11 @@ const Navbar = () => {
 								/>
 							</button>
 							<div className={styles.dropdown}>
-								<Link className='block' href='/favourites'>
-									Избранное
-								</Link>
-								<Link className='block' href='/profile'>
-									Мои товары
-								</Link>
-								<Link className='block' href='/settings'>
-									Настройки
-								</Link>
-								<button className='block' onClick={logout}>
-									Выход
-								</button>
+								<Link href='/favourites'>Избранное</Link>
+								<Link href='/profile'>Мои товары</Link>
+								<Link href='/settings'>Настройки</Link>
+								<hr />
+								<button onClick={logout}>Выйти</button>
 							</div>
 						</div>
 					) : (

@@ -1,33 +1,42 @@
-
-
 .dropdown {
-    display: none;
-    position: absolute; // Position absolutely
-    top: calc(90%); // Adjust top position to align with button bottom
-    left: 0;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 8px 8px rgba(0, 0, 0, 0.2);
-    padding: 5px;
-    min-width: 120px;
-    z-index: 10;
-    &:hover {
-        display: block;
-    }
-    button,
-    a {
-        font-size: 18px;
-        text-align: left;
-        margin-left: 2px;
-        color: #7AC751;
-        margin-bottom: 3px;
-        width: 100%;
-    }
+	display: block;
+	position: absolute;
+	top: calc(90%);
+	left: 0;
+	background-color: #fff;
+	border-radius: 10px;
+	border: 1px solid #bebebe;
+	box-shadow: 0 8px 8px rgba(0, 0, 0, 0.2);
+	padding: 8px;
+	min-width: 150px;
+	z-index: 10;
+	&:hover {
+		display: block;
+	}
+	hr {
+		margin: 3px 0;
+	}
+	button,
+	a {
+		display: block;
+		border-radius: 8px;
+		font-size: 18px;
+		text-align: left;
+		margin-left: 2px;
+		color: #a0a0a0;
+		margin-bottom: 3px;
+		width: 100%;
+		&:hover {
+			background: rgba(125, 212, 252, 0.341);
+			color: rgb(37, 99, 235);
+			padding: 5px;
+		}
+	}
 }
 
 .btn_dropdown {
-    position: relative;
-    &:hover .dropdown {
-        display: block;
-    }
+	position: relative;
+	&:hover .dropdown {
+		display: block;
+	}
 }
