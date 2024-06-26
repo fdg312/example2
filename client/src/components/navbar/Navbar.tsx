@@ -7,6 +7,8 @@ import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import avatar from '../../../public/ava.webp'
 import data from '../../constants/russia.json'
+import ButtonExit from '../buttons/buttonExit/ButtonExit'
+import ButtonLink from '../buttons/buttonLink/ButtonLink'
 import { Search } from '../search/Search'
 import styles from './navbar.module.scss'
 
@@ -184,11 +186,11 @@ const Navbar = () => {
 								/>
 							</button>
 							<div className={styles.dropdown}>
-								<Link href='/favourites'>Избранное</Link>
-								<Link href='/profile'>Мои товары</Link>
-								<Link href='/settings'>Настройки</Link>
+								<ButtonLink text='Мои объявления' href='/profile' />
+								<ButtonLink text='Избранное' href='/favourites' />
+								<ButtonLink text='Настройки' href='/settings' />
 								<hr />
-								<button onClick={logout}>Выйти</button>
+								<ButtonExit text='Выйти' onClick={logout} />
 							</div>
 						</div>
 					) : (

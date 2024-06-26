@@ -1,0 +1,15 @@
+.btn_exit {
+	display: block;
+	border-radius: 8px;
+	font-size: 18px;
+	text-align: left;
+	color: rgb(107 114 128);
+	margin: 6px 0;
+	margin-left: 2px;
+	width: 100%;
+	&:hover {
+		background: rgb(248, 113, 113, 0.2);
+		color: rgb(220 38 38);
+		padding: 5px;
+	}
+}

@@ -24,8 +24,8 @@ export default function RootLayout({
 			<html lang='en'>
 				<body className={rubik.className}>
 					<Navbar />
-					<Aside />
 					<main className='container'>
+						<Aside />
 						{auth}
 						{children}
 					</main>

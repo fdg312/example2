@@ -1,0 +1,16 @@
+@import '../../../app/variables.scss';
+
+.btn_link {
+	display: block;
+	border-radius: 8px;
+	font-size: 18px;
+	text-align: left;
+	color: rgb(107 114 128);
+	margin-left: 2px;
+	width: 100%;
+	&:hover {
+		padding: 5px;
+		background: $light-blue;
+		color: $blue;
+	}
+}

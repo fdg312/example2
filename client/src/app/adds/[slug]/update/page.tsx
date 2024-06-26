@@ -53,7 +53,6 @@ const UpdateAddPage = ({ params }: { params: { slug: string } }) => {
 				subcategory: add.subcategory?.slug,
 			})
 		}
-		console.log(watch(), 'watch')
 
 		fetchData()
 	}, [])

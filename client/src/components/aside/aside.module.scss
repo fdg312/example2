@@ -1,0 +1,19 @@
+.aside {
+	width: 12%;
+	display: inline-flex;
+	position: fixed;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: flex-start;
+	border-radius: 8px;
+	border: 1px solid #bebebe;
+	padding: 15px;
+	height: 60%;
+	margin-top: 44px;
+	.upper {
+		width: 100%;
+	}
+	.lower {
+		width: 100%;
+	}
+}
