@@ -190,7 +190,7 @@ const Navbar = () => {
 								<ButtonLink text='Избранное' href='/favourites' />
 								<ButtonLink text='Настройки' href='/settings' />
 								<hr />
-								<ButtonExit text='Выйти' onClick={logout} />
+								<ButtonExit onClick={logout}>Выйти</ButtonExit>
 							</div>
 						</div>
 					) : (

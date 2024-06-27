@@ -5,9 +5,10 @@ import useAuth from '@/stores/authStore'
 import { usePathname } from 'next/navigation'
 import { LuHeart, LuSettings, LuShoppingCart } from 'react-icons/lu'
 import { RxExit } from 'react-icons/rx'
-import ButtonExit from '../buttons/buttonExit/ButtonExit'
+import Button from '../buttons/buttonExit/ButtonExit'
 import ButtonLink from '../buttons/buttonLink/ButtonLink'
 import styles from './aside.module.scss'
+import ButtonExit from '../buttons/buttonExit/ButtonExit'
 
 const Aside = () => {
 	const pathname = usePathname()
@@ -47,9 +48,10 @@ const Aside = () => {
 						marginY={3}
 						padding={true}
 						onClick={logout}
-						text='Выйти'
 						icon={<RxExit className='inline mr-[10px]' />}
-					/>
+					>
+						Выйти
+					</ButtonExit>
 				</div>
 			</aside>
 		)

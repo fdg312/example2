@@ -1,0 +1,28 @@
+@import '../../../app/variables.scss';
+
+.wrapper {
+	margin-top: 50px;
+	h2 {
+		font-size: 36px;
+		margin: 0;
+	}
+	.address {
+		font-size: 18px;
+		color: $blue;
+		margin-bottom: 10px;
+		span {
+			color: rgb(0, 0, 0);
+		}
+	}
+	.price {
+		font-size: 24px;
+	}
+	.category-link {
+		text-decoration: underline;
+		color: $blue;
+		font-size: 18px;
+		&:hover {
+			text-decoration: none;
+		}
+	}
+}
