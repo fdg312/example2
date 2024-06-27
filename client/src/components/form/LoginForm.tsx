@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { FieldErrors, SubmitHandler, UseFormRegister } from 'react-hook-form'
+import ButtonSubmit from '../buttons/buttonSubmit/ButtonSubmit'
 import InputForm from '../input/inputForm/InputForm'
 
 type LoginFormType = {
@@ -49,18 +50,17 @@ const LoginForm = ({ errors, register, onSubmit }: LoginFormType) => {
 					},
 				}}
 			/>
-			<button className='bg-[#7AC751] hover:bg-[#71bb49] text-white font-bold py-2 px-4 rounded-[10px] mb-2'>
+			<Link className='text-[#7AC751]' href='/auth/forgot-password'>
+				Забыл пароль?
+			</Link>
+			<ButtonSubmit classes='mt-2 float-end'>Войти</ButtonSubmit>
+			{/* <button className='bg-[#7AC751] hover:bg-[#71bb49] text-white font-bold py-2 px-4 rounded-[10px] mb-2'>
 				Войти
-			</button>
-			<div>
+			</button> */}
+			<div className='mt-[35px]'>
 				<span className='mr-1'>Ещё нет аккаунта?</span>
 				<Link className='text-[#7AC751]' href='/auth/signup'>
 					Зарегистрироваться
-				</Link>
-			</div>
-			<div>
-				<Link className='text-[#7AC751]' href='/auth/forgot-password'>
-					Забыл пароль?
 				</Link>
 			</div>
 		</form>

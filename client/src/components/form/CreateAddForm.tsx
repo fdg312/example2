@@ -10,6 +10,8 @@ import {
 	UseFormSetValue,
 } from 'react-hook-form'
 import data from '../../constants/russia.json'
+import ButtonReset from '../buttons/buttonReset/ButtonReset'
+import ButtonSubmit from '../buttons/buttonSubmit/ButtonSubmit'
 import { FileFormInput } from '../input/fileFormInput/FileFormInput'
 import InputForm from '../input/inputForm/InputForm'
 import { CategorySelect } from '../select/categoryselect/CategorySelect'
@@ -274,12 +276,10 @@ const CreateAddForm = ({
 					)}
 				</div>
 			</div>
-			<button
-				type='submit'
-				className='mb-3 flex w-full justify-center rounded-md bg-yellow-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-yellow-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
-			>
-				Создать объявление
-			</button>
+			<div className='float-end'>
+				<ButtonReset classes='mr-6'>Сбросить</ButtonReset>
+				<ButtonSubmit>Создать объявление</ButtonSubmit>
+			</div>
 		</form>
 	)
 }

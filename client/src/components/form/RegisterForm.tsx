@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { FieldErrors, SubmitHandler, UseFormRegister } from 'react-hook-form'
+import ButtonSubmit from '../buttons/buttonSubmit/ButtonSubmit'
 import InputForm from '../input/inputForm/InputForm'
 
 type RegisterFormType = {
@@ -68,9 +69,7 @@ const RegisterForm = ({ errors, register, onSubmit }: RegisterFormType) => {
 				errors={errors}
 				required={true}
 			/>
-			<button className='bg-[#7AC751] hover:bg-[#71bb49] text-white font-bold py-2 px-4 rounded-[10px] mb-2'>
-				Регистрация
-			</button>
+			<ButtonSubmit classes='mt-2 float-end'>Регистрация</ButtonSubmit>
 			<div>
 				<span className='mr-1'>Уже есть аккаунт?</span>
 				<Link className='text-[#7AC751]' href='/auth/login'>

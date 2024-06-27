@@ -4,16 +4,19 @@ import {
 	SubmitHandler,
 	UseFormRegister,
 } from 'react-hook-form'
+import ButtonSubmit from '../buttons/buttonSubmit/ButtonSubmit'
 import InputForm from '../input/inputForm/InputForm'
-import { FileFormInput } from '../input/fileFormInput/FileFormInput'
+import ButtonReset from '../buttons/buttonReset/ButtonReset'
 
 type UpdateAddFormType = {
 	errors: FieldErrors<any>
 	register: UseFormRegister<any>
 	onSubmit: SubmitHandler<any>
 	control: Control<any>
-	images: { id: number; image: File }[]
-	setImages: React.Dispatch<React.SetStateAction<{ id: number; image: File }[]>>
+	images?: { id: number; image: File }[]
+	setImages?: React.Dispatch<
+		React.SetStateAction<{ id: number; image: File }[]>
+	>
 }
 
 const SettingsForm = ({
@@ -76,20 +79,20 @@ const SettingsForm = ({
 					/>
 				</div>
 			</div>
-			<FileFormInput
+			<div className='float-end'>
+				<ButtonReset classes='mr-6'>Сбросить</ButtonReset>
+				<ButtonSubmit>Сохранить изменения</ButtonSubmit>
+			</div>
+			{/* <FileFormInput
 				errors={errors}
 				control={control}
 				label='Фото'
 				images={images}
 				setImages={setImages}
 				maxImages={1}
-			/>
-			{/* <button
-				type='submit'
-				className='mb-3 flex w-full justify-center rounded-md bg-yellow-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-yellow-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
-			>
-				Сохранить изменения
-			</button> */}
+			/> */}
 		</form>
 	)
 }
+
+export default SettingsForm

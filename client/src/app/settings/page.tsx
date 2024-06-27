@@ -1,7 +1,6 @@
 'use client'
 
-import { FileFormInput } from '@/components/input/fileFormInput/FileFormInput'
-import InputForm from '@/components/input/inputForm/InputForm'
+import SettingsForm from '@/components/form/SettingsForm'
 import { UploadService } from '@/services/upload'
 import { UserService } from '@/services/user'
 import useAuth from '@/stores/authStore'
@@ -82,62 +81,12 @@ const Settings = () => {
 			>
 				Настройки
 			</h2>
-			<form
+			<SettingsForm
+				control={control}
+				errors={errors}
+				register={register}
 				onSubmit={handleSubmit(onSubmit)}
-				className='space-y-6 sm:mx-auto sm:w-full sm:max-w-lg'
-			>
-				<div className='flex'>
-					<div className='w-1/2 mr-2'>
-						<InputForm
-							type='email'
-							name='email'
-							label='Почта'
-							pattern={/^[^@ ]+@[^@ ]+\.[^@ .]{2,}$/}
-							register={register}
-							errors={errors}
-							required={false}
-						/>
-					</div>
-					<div className='w-1/2 mr-2'>
-						<InputForm
-							type='phone'
-							name='phone'
-							label='Телефон'
-							register={register}
-							errors={errors}
-							required={false}
-						/>
-					</div>
-				</div>
-				<div>
-					<div>
-						<InputForm
-							type='text'
-							name='name'
-							label='ФИО'
-							register={register}
-							errors={errors}
-							minLength={3}
-							required={false}
-						/>
-					</div>
-				</div>
-				<FileFormInput
-					errors={errors}
-					control={control}
-					label='Фото'
-					images={images}
-					setImages={setImages}
-					maxImages={1}
-				/>
-                <ButtonSubmit>Сохранить изменения</ButtonSubmit>
-				{/* <button
-					type='submit'
-					className='mb-3 flex w-full justify-center rounded-md bg-yellow-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-yellow-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600'
-				>
-					Сохранить изменения
-				</button> */}
-			</form>
+			/>
 		</div>
 	)
 }

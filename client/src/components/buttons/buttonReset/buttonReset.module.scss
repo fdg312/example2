@@ -1,0 +1,12 @@
+@import '../../../app/variables.scss';
+
+.btn_reset {
+	color: $grey;
+	font-size: 18px;
+	border: none;
+	background: none;
+	cursor: pointer;
+	&:hover {
+		color: rgb(156 163 175);
+	}
+}
