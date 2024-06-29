@@ -116,7 +116,10 @@ const PageAdd = ({ params }: { params: { slug: string } }) => {
 						</div>
 					</div>
 				</div>
-				<p className='mt-[30px] text-[20px]'>{add?.text}</p>
+				<div className='desc'>
+					<h3 className='desc_title'>Описание</h3>
+					<p className='desc_text'>{add?.text}</p>
+				</div>
 			</div>
 		</main>
 	)
