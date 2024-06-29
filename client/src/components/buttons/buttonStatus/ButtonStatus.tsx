@@ -14,8 +14,6 @@ const ButtonStatus = ({
 	classes?: string
 	icon?: JSX.Element
 }) => {
-	console.log(status, 'status')
-
 	return (
 		<button
 			onClick={onClick}

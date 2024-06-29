@@ -15,9 +15,20 @@ export const AddService = {
 			let cityValue = city == 'Россия' ? '' : city
 			cityValue = cityValue && `&city=${cityValue}`
 
-			const response = await instance.get(`/adds?${take}${text}${cityValue}`)
+			// const response = await instance.get(`/adds?${take}${text}${cityValue}`)
+			const response = await fetch(
+				`http://localhost:3000/api/adds?${take}${text}${cityValue}`,
+				{
+					method: 'GET',
+					headers: {
+						'Content-Type': 'application/json',
+					},
+					next: { revalidate: 50 },
+				}
+			).then(res => res.json())
+			console.log(response)
 
-			return response.data
+			return response
 		} catch (e) {}
 	},
 
