@@ -10,6 +10,7 @@ import { useForm } from 'react-hook-form'
 const Page = () => {
 	const { login } = useAuth()
 	const router = useRouter()
+	console.log()
 
 	const {
 		register,
