@@ -3,6 +3,7 @@
 import LoginForm from '@/components/form/LoginForm'
 import Modal from '@/components/modal/Modal'
 import useAuth from '@/stores/authStore'
+import useSessionStore from '@/stores/sessionStore'
 import { IAuthLogin } from '@/types/auth.interface'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
@@ -10,7 +11,6 @@ import { useForm } from 'react-hook-form'
 const Page = () => {
 	const { login } = useAuth()
 	const router = useRouter()
-	console.log()
 
 	const {
 		register,

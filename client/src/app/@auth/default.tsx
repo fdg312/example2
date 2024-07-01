@@ -10,59 +10,58 @@ import { useEffect, useState } from 'react'
 const mulish = Mulish({ subsets: ['cyrillic'] })
 
 export default function Default() {
-	// const { adds, setAdds, city, previousPage, setPreviousPage } =
-	// 	useSessionStore()
-	// const [loading, setLoading] = useState(true)
-	// const searchParams = useSearchParams()
-	// const pathname = usePathname()
+	const { adds, setAdds, city, previousPage, setPreviousPage } =
+		useSessionStore()
+	const [loading, setLoading] = useState(true)
+	const searchParams = useSearchParams()
+	const pathname = usePathname()
 
-	// useEffect(() => {
-	// 	const fetchData = async (city: string) => {
-	// 		const adds = await AddService.getAll(
-	// 			10,
-	// 			searchParams.get('query') || '',
-	// 			city
-	// 		)
+	useEffect(() => {
+		console.log(previousPage)
 
-	// 		setAdds(adds)
-	// 	}
+		const fetchData = async (city: string) => {
+			const adds = await AddService.getAll(
+				10,
+				searchParams.get('query') || '',
+				city
+			)
 
-	// 	useSessionStore.subscribe((state, prevState) => {
-	// 		if (state.city !== prevState.city) {
-	// 			fetchData(state.city)
-	// 		}
-	// 	})
+			setAdds(adds)
+		}
 
-	// 	setLoading(false)
-	// }, [searchParams, city])
+		useSessionStore.subscribe((state, prevState) => {
+			if (state.city !== prevState.city) {
+				fetchData(state.city)
+			}
+		})
 
-	return null
-	// (!previousPage.length || previousPage.includes('/')) &&
-	// !!pathname.split('/').includes('auth') &&
-	// (
-	// 	<main className='container'>
-	// 		<div className='wrapper mt-6'>
-	// 			{adds ? (
-	// 				<h2
-	// 					className={
-	// 						'text-center text-[36px] text-[#555555] mb-8 font-bold mt-[20px] ' +
-	// 						mulish.className
-	// 					}
-	// 				>
-	// 					Мои объявления
-	// 				</h2>
-	// 			) : (
-	// 				<h2
-	// 					className={
-	// 						'text-center text-[36px] text-[#555555] mb-8 font-bold mt-[20px] ' +
-	// 						mulish.className
-	// 					}
-	// 				>
-	// 					Нет объявлений
-	// 				</h2>
-	// 			)}
-	// 			<AddsDiv loading={loading} setLoading={setLoading} adds={adds} />
-	// 		</div>
-	// 	</main>
-	// )
+		setLoading(false)
+	}, [searchParams, city, pathname])
+
+	return !!previousPage.length ? null : (
+		<main className='container'>
+			<div className='wrapper mt-6'>
+				{adds ? (
+					<h2
+						className={
+							'text-center text-[36px] text-[#555555] mb-8 font-bold mt-[20px] ' +
+							mulish.className
+						}
+					>
+						Мои объявления
+					</h2>
+				) : (
+					<h2
+						className={
+							'text-center text-[36px] text-[#555555] mb-8 font-bold mt-[20px] ' +
+							mulish.className
+						}
+					>
+						Нет объявлений
+					</h2>
+				)}
+				<AddsDiv loading={loading} setLoading={setLoading} adds={adds} />
+			</div>
+		</main>
+	)
 }

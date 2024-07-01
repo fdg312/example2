@@ -16,10 +16,12 @@ const AuthProvider: React.FC<PropsWithChildren> = ({ children }) => {
 		const accessToken = Cookies.get('accessToken')
 		if (accessToken) checkAuth()
 	}, [])
+
 	useEffect(() => {
+		console.log(previousPage)
+
 		const refreshToken = Cookies.get('refreshToken')
 		if (!refreshToken && user) logout()
-		console.log(previousPage)
 
 		if (previousPage[1] !== pathname && !pathname.split('/').includes('auth')) {
 			return setPreviousPage([previousPage[1], pathname])

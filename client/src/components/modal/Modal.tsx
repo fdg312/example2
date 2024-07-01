@@ -1,4 +1,5 @@
-import { usePathname, useRouter } from 'next/navigation'
+import useSessionStore from '@/stores/sessionStore'
+import { useRouter } from 'next/navigation'
 import React, { useRef } from 'react'
 import { RxCross2 } from 'react-icons/rx'
 
@@ -6,7 +7,7 @@ const Modal = ({ children }: { children: React.ReactNode }) => {
 	const modalRef = useRef<HTMLDivElement>(null)
 	const closeBtnRef = useRef<HTMLDivElement>(null)
 	const router = useRouter()
-	const pathname = usePathname()
+	const { previousPage } = useSessionStore()
 
 	const handleClose = (event: any) => {
 		if (
@@ -14,8 +15,10 @@ const Modal = ({ children }: { children: React.ReactNode }) => {
 			(!modalRef.current.contains(event.target) ||
 				closeBtnRef.current?.contains(event.target))
 		) {
-			if (true) {
-				router.back()
+			console.log(previousPage)
+
+			if (!!previousPage.length && previousPage[1] !== '/') {
+				return router.back()
 			}
 			router.push('/')
 		}
