@@ -38,7 +38,8 @@ export default function Default() {
 		setLoading(false)
 	}, [searchParams, city, pathname])
 
-	return !!previousPage.length ? null : (
+	return !pathname.split('/').includes('auth') &&
+		!!previousPage.length ? null : (
 		<main className='container'>
 			<div className='wrapper mt-6'>
 				{adds ? (
