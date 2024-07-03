@@ -85,13 +85,15 @@ export class AuthService {
 	}
 
 	async register(dto: AuthDto) {
-		const oldUser = await this.prisma.user.findUnique({
+		const oldUser = await this.prisma.user.findFirst({
 			where: {
-				email: dto.email,
+				OR: [{ email: dto.email }, { phone: dto.phone }],
 			},
 		})
+		console.log(dto)
 
 		if (oldUser) throw new BadRequestException('User already exists')
+		console.log(dto)
 
 		const user = await this.prisma.user.create({
 			data: {

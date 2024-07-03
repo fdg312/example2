@@ -2,7 +2,9 @@
 
 import UpdateAddForm from '@/components/form/UpdateAddForm'
 import { AddService } from '@/services/add'
+import useAuth from '@/stores/authStore'
 import { IAddResponse } from '@/types/add.interface'
+import { redirect } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
@@ -20,7 +22,7 @@ type FormFields = {
 const UpdateAddPage = ({ params }: { params: { slug: string } }) => {
 	const [images, setImages] = useState<{ id: number; image: File }[]>([])
 	const [add, setAdd] = useState<IAddResponse>()
-	console.log(params.slug)
+	const { user } = useAuth()
 
 	const {
 		register,
@@ -41,6 +43,8 @@ const UpdateAddPage = ({ params }: { params: { slug: string } }) => {
 	useEffect(() => {
 		async function fetchData() {
 			const add = await AddService.getBySlug(params.slug)
+			if (add.user.id !== user?.id) redirect('/')
+
 			setAdd(add)
 
 			reset({
