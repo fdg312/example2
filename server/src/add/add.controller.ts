@@ -89,4 +89,11 @@ export class AddController {
 	async getByFavourites(@CurrentUser('id') userId: string) {
 		return await this.addService.getByFavourites(userId)
 	}
+
+	@UsePipes(new ValidationPipe())
+	@HttpCode(200)
+	@Get(':id/related')
+	async getRelated(@Param('id') id: string, @Query('take') take: number) {
+		return await this.addService.getRelated(id, take)
+	}
 }

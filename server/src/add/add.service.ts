@@ -166,8 +166,6 @@ export class AddService {
 			}
 		}
 
-		console.log(filteredAddData, 'filteredAddData')
-
 		return await this.prisma.add.update({
 			where: {
 				id,
@@ -196,6 +194,31 @@ export class AddService {
 				id,
 				user: { id: userId },
 			},
+		})
+	}
+
+	async getRelated(id: string, take: number = 10) {
+		const add = await this.prisma.add.findUnique({
+			where: {
+				id,
+			},
+		})
+
+		if (!add) throw new NotFoundException('Add not found')
+
+		return await this.prisma.add.findMany({
+			where: {
+				AND: [
+					{
+						OR: [
+							{ categoryId: add.categoryId },
+							{ subcategoryId: add.subcategoryId },
+						],
+					},
+					{ id: { not: add.id } },
+				],
+			},
+			take,
 		})
 	}
 }
