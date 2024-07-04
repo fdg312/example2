@@ -31,6 +31,18 @@ export const AddService = {
 		} catch (e) {}
 	},
 
+	async getRelated(id: string, take: number = 10): Promise<IAddResponse[]> {
+		try {
+			console.log(id)
+
+			const response = await instance.get(`/adds/${id}/related?take=${take}`)
+
+			return response.data
+		} catch (e) {
+			throw e
+		}
+	},
+
 	async getBySlug(slug: string): Promise<IAddResponse> {
 		try {
 			const response = await instance.get('/adds/by-slug/' + slug)

@@ -203,8 +203,10 @@ export class AddService {
 				id,
 			},
 		})
+		console.log(add)
 
 		if (!add) throw new NotFoundException('Add not found')
+		console.log(add)
 
 		return await this.prisma.add.findMany({
 			where: {

@@ -2,6 +2,7 @@
 
 import Button from '@/components/buttons/button/Button'
 import ButtonStatus from '@/components/buttons/buttonStatus/ButtonStatus'
+import SlideShow, { SlideProps } from '@/components/slideShow/SlideShow'
 import { AddService } from '@/services/add'
 import { FavouriteService } from '@/services/favourite'
 import useAuth from '@/stores/authStore'
@@ -17,6 +18,8 @@ import './index.scss'
 const PageAdd = ({ params }: { params: { slug: string } }) => {
 	const { isAuth } = useAuth()
 	const [add, setAdd] = useState<IAddResponse>()
+	const [relatedAdds, setRelatedAdds] = useState<IAddResponse[]>()
+	const [slides, setSlides] = useState<SlideProps[]>([])
 	const [visiblePhone, setVisiblePhone] = useState(false)
 	const [isFavourite, setIsFavourite] = useState(false)
 	const [isCopy, setIsCopy] = useState(false)
@@ -26,6 +29,19 @@ const PageAdd = ({ params }: { params: { slug: string } }) => {
 		async function fetchData() {
 			const data = await AddService.getBySlug(params.slug)
 			setAdd(data)
+			console.log(data)
+
+			const related = await AddService.getRelated(data.id)
+			setRelatedAdds(related)
+
+			related &&
+				setSlides(
+					related.map(a => ({
+						city: a.city,
+						title: a.title,
+						price: a.price.toString(),
+					}))
+				)
 
 			const favAdd = add?.favourites?.find(
 				(fav: IFavourite) => fav.addId == add.id
@@ -120,6 +136,7 @@ const PageAdd = ({ params }: { params: { slug: string } }) => {
 					<h3 className='desc_title'>Описание</h3>
 					<p className='desc_text'>{add?.text}</p>
 				</div>
+				<SlideShow slides={slides} />
 			</div>
 		</main>
 	)

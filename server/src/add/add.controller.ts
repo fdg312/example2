@@ -93,7 +93,7 @@ export class AddController {
 	@UsePipes(new ValidationPipe())
 	@HttpCode(200)
 	@Get(':id/related')
-	async getRelated(@Param('id') id: string, @Query('take') take: number) {
-		return await this.addService.getRelated(id, take)
+	async getRelated(@Param('id') id: string, @Query('take') take: string) {
+		return await this.addService.getRelated(id, +take)
 	}
 }
