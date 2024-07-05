@@ -2,6 +2,7 @@
 
 import Button from '@/components/buttons/button/Button'
 import ButtonStatus from '@/components/buttons/buttonStatus/ButtonStatus'
+import { ImageSlideShow } from '@/components/slideShow/imageSlideShow/ImageSlideShow'
 import SlideShow, { SlideProps } from '@/components/slideShow/SlideShow'
 import { AddService } from '@/services/add'
 import { FavouriteService } from '@/services/favourite'
@@ -79,7 +80,17 @@ const PageAdd = ({ params }: { params: { slug: string } }) => {
 			<div className='wrapper'>
 				<div className='flex'>
 					<div className='relative'>
-						<div className='w-[550px] h-[450px] bg-black'></div>
+						{/* <div className='w-[550px] h-[450px] bg-black'></div> */}
+						<div className='w-[550px] h-[450px] border-[1px] bg-neutral-400'>
+							<ImageSlideShow images={add?.images ?? []} />
+							{/* <Image
+								src={`/uploads/${add?.images[0]}`}
+								alt={add?.title ?? ''}
+								fill
+								objectFit='contain'
+								objectPosition='center'
+							/> */}
+						</div>
 						{/* <div
 								onClick={() => changeFavourite()}
 								className='absolute top-2 right-2 text-red-400 text-[30px]'

@@ -2,6 +2,7 @@ import { removeTokensStorage } from '@/core/handleTokens'
 import { AuthService } from '@/services/auth'
 import { IAuthLogin, IAuthRegister } from '@/types/auth.interface'
 import { IResponseUser } from '@/types/user.interface'
+import Cookies from 'js-cookie'
 import { create } from 'zustand'
 
 type AuthState = {
@@ -25,7 +26,7 @@ const useAuth = create<AuthState>(set => ({
 
 			const user = data?.user
 			set({ user, isAuth: true, isLoading: false })
-			localStorage.setItem('user', JSON.stringify(user))
+			Cookies.set('user', JSON.stringify(user))
 
 			return 'Success'
 		} catch (error) {
@@ -38,7 +39,7 @@ const useAuth = create<AuthState>(set => ({
 
 			const user = data?.user
 			set({ user, isAuth: true, isLoading: false })
-			localStorage.setItem('user', JSON.stringify(user))
+			Cookies.set('user', JSON.stringify(user))
 		} catch (error) {
 			console.error('Login error:', error)
 			throw error
@@ -47,7 +48,7 @@ const useAuth = create<AuthState>(set => ({
 	logout: () => {
 		set({ user: null, isAuth: false, isLoading: false })
 		removeTokensStorage()
-		localStorage.removeItem('user')
+		Cookies.remove('user')
 	},
 	checkAuth: async () => {
 		try {

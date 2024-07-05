@@ -19,8 +19,8 @@ const Page = () => {
 	} = useForm<IAuthLogin>()
 	const onSubmit = (form: IAuthLogin) => {
 		login(form)
-		router.push('/')
 		reset()
+		window.location.href = '/'
 	}
 
 	return (

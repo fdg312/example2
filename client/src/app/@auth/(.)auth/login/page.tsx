@@ -3,7 +3,6 @@
 import LoginForm from '@/components/form/LoginForm'
 import Modal from '@/components/modal/Modal'
 import useAuth from '@/stores/authStore'
-import useSessionStore from '@/stores/sessionStore'
 import { IAuthLogin } from '@/types/auth.interface'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
@@ -20,8 +19,8 @@ const Page = () => {
 	} = useForm<IAuthLogin>()
 	const onSubmit = (form: IAuthLogin) => {
 		login(form)
-		router.push('/')
 		reset()
+		window.location.href = '/'
 	}
 
 	return (
