@@ -1,6 +1,7 @@
 'use client'
 
 import { AddsDiv } from '@/components/addsDiv/addsDiv'
+import Chat from '@/components/chat/Chat'
 import { AddService } from '@/services/add'
 import useSessionStore from '@/stores/sessionStore'
 import { Mulish } from 'next/font/google'
@@ -70,6 +71,10 @@ export default function Default() {
 					</h2>
 				)}
 				<AddsDiv loading={loading} setLoading={setLoading} adds={adds} />
+				<Chat
+					chatId={'clycrhbvf000061xdigpgejmp'}
+					userId={'cly43j0kn0000zumfzfxexvmt'}
+				/>
 			</div>
 		</main>
 	)

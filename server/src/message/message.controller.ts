@@ -20,8 +20,8 @@ export class MessageController {
 	@HttpCode(200)
 	@Auth()
 	@Post(':id')
-	async getMany(@Param('id') id: string) {
-		return await this.messageService.getMany(id)
+	async getChat(@Param('id') id: string) {
+		return await this.messageService.getChat(id)
 	}
 
 	@UsePipes(new ValidationPipe())

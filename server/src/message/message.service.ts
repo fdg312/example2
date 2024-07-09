@@ -5,7 +5,7 @@ import { PrismaService } from 'src/prisma.service'
 export class MessageService {
 	constructor(private readonly prisma: PrismaService) {}
 
-	async getMany(id: string) {
+	async getChat(id: string) {
 		return await this.prisma.message.findMany({
 			where: {
 				chatId: id,

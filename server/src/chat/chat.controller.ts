@@ -6,9 +6,9 @@ import {
 	UsePipes,
 	ValidationPipe,
 } from '@nestjs/common'
-import { ChatService } from './chat.service'
 import { Auth } from 'src/auth/decorators/auth.decorator'
 import { CurrentUser } from 'src/auth/decorators/user.decorator'
+import { ChatService } from './chat.service'
 
 @Controller('chat')
 export class ChatController {
@@ -19,11 +19,11 @@ export class ChatController {
 	@Auth()
 	@Post()
 	async create(
-		@Body() receiverId: string,
+		@Body('receiverId') receiverId: string,
 		@CurrentUser('id') senderId: string
 	) {
 		{
-			this.chatService.create(senderId, receiverId)
+			return await this.chatService.createChat(senderId, receiverId)
 		}
 	}
 
