@@ -2,8 +2,10 @@
 
 import Button from '@/components/buttons/button/Button'
 import ButtonStatus from '@/components/buttons/buttonStatus/ButtonStatus'
+import { ProfileDiv } from '@/components/profilediv/ProfileDiv'
+import SlideShow from '@/components/slideShow/addSlidShow/AddSlideShow'
+import { SlideProps } from '@/components/slideShow/addSlidShow/slide/Slide'
 import { ImageSlideShow } from '@/components/slideShow/imageSlideShow/ImageSlideShow'
-import SlideShow, { SlideProps } from '@/components/slideShow/SlideShow'
 import { AddService } from '@/services/add'
 import { FavouriteService } from '@/services/favourite'
 import useAuth from '@/stores/authStore'
@@ -37,11 +39,14 @@ const PageAdd = ({ params }: { params: { slug: string } }) => {
 
 			related &&
 				setSlides(
-					related.map(a => ({
-						city: a.city,
-						title: a.title,
-						price: a.price.toString(),
-					}))
+					Array(4).fill(
+						related.map(a => ({
+							city: a.city,
+							title: a.title,
+							price: a.price.toString(),
+							slug: a.slug,
+						}))[0]
+					)
 				)
 
 			const favAdd = add?.favourites?.find(
@@ -80,23 +85,9 @@ const PageAdd = ({ params }: { params: { slug: string } }) => {
 			<div className='wrapper'>
 				<div className='flex'>
 					<div className='relative'>
-						{/* <div className='w-[550px] h-[450px] bg-black'></div> */}
 						<div className='w-[550px] h-[450px] border-[1px] bg-neutral-400'>
 							<ImageSlideShow images={add?.images ?? []} />
-							{/* <Image
-								src={`/uploads/${add?.images[0]}`}
-								alt={add?.title ?? ''}
-								fill
-								objectFit='contain'
-								objectPosition='center'
-							/> */}
 						</div>
-						{/* <div
-								onClick={() => changeFavourite()}
-								className='absolute top-2 right-2 text-red-400 text-[30px]'
-							>
-								{isAuth && (isFavourite ? <FaHeart /> : <FaRegHeart />)}
-							</div> */}
 					</div>
 					<div className='ml-[30px]'>
 						<div>
@@ -139,7 +130,13 @@ const PageAdd = ({ params }: { params: { slug: string } }) => {
 							>
 								Избранное
 							</ButtonStatus>
-							{/* <ProfileDiv name={add?.user?.name} createdAt={new Date()} /> */}
+							{add && (
+								<ProfileDiv
+									id={add.user.id}
+									name={add.user.name}
+									createdAt={new Date(add.user.createdAt)}
+								/>
+							)}
 						</div>
 					</div>
 				</div>
@@ -147,7 +144,11 @@ const PageAdd = ({ params }: { params: { slug: string } }) => {
 					<h3 className='desc_title'>Описание</h3>
 					<p className='desc_text'>{add?.text}</p>
 				</div>
-				<SlideShow slides={slides} />
+				<div className='related-adds'>
+					<h2>Похожие объявления</h2>
+					<hr />
+					<SlideShow slides={slides} />
+				</div>
 			</div>
 		</main>
 	)

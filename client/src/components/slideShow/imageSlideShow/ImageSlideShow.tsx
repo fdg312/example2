@@ -30,6 +30,19 @@ export const ImageSlideShow = ({ images }: { images: string[] }) => {
 						</div>
 					</SwiperSlide>
 				))}
+				{images.map((image, i) => (
+					<SwiperSlide key={i}>
+						<div className={styles.imageWrapper}>
+							<Image
+								src={`/uploads/${image}`}
+								alt={`Slide ${i}`}
+								layout='fill'
+								objectFit='contain'
+								objectPosition='center'
+							/>
+						</div>
+					</SwiperSlide>
+				))}
 			</Swiper>
 			<div className='swiper-button-prev'></div>
 			<div className='swiper-button-next'></div>

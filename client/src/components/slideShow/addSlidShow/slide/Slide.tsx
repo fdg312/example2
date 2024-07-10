@@ -1,14 +1,11 @@
-// components/SlideShow.tsx
-import React from 'react'
-import { Swiper, SwiperSlide } from 'swiper/react'
-
 export type SlideProps = {
 	city: string
 	title: string
 	price: string
+	slug: string
 }
 
-const Slide: React.FC<SlideProps> = ({ city, title, price }) => {
+export const Slide: React.FC<SlideProps> = ({ city, title, price }) => {
 	const mulish = { className: 'font-mulish' }
 	return (
 		<div className='max-w-[270px]'>
@@ -29,21 +26,3 @@ const Slide: React.FC<SlideProps> = ({ city, title, price }) => {
 		</div>
 	)
 }
-
-type SlideShowProps = {
-	slides: SlideProps[]
-}
-
-const SlideShow: React.FC<SlideShowProps> = ({ slides }) => {
-	return (
-		<Swiper spaceBetween={50} slidesPerView={1}>
-			{slides.map((slide, index) => (
-				<SwiperSlide key={index}>
-					<Slide city={slide.city} title={slide.title} price={slide.price} />
-				</SwiperSlide>
-			))}
-		</Swiper>
-	)
-}
-
-export default SlideShow
