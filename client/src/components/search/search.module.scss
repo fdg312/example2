@@ -1,16 +1,34 @@
+@import '../../app/variables.scss';
+
 .select {
-    margin-right: 10px;
-    border: 2px solid #7AC751;
-    height: 100%;
-    border-radius: 10px;
-    &:focus {
-        box-shadow: none;
-        border: 2px solid #7AC751;
-    }
-    &::placeholder {
-        color: #B0B0B0;
-    }
-    ::-ms-input-placeholder {
-        color: #B0B0B0;
-    }
+	margin-right: 10px;
+	border: 2px solid #7ac751;
+	height: 100%;
+	border-radius: 10px;
+	&:focus {
+		box-shadow: none;
+		border: 2px solid #7ac751;
+	}
+	&::placeholder {
+		color: #b0b0b0;
+	}
+	::-ms-input-placeholder {
+		color: #b0b0b0;
+	}
+}
+
+.icon {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+	background-color: $blue;
+	color: white;
+	border-radius: 0 10px 10px 0;
+	cursor: pointer;
+	padding: 0 18px;
+	font-size: 18px;
+	&:hover {
+		background-color: $dark-blue;
+	}
 }

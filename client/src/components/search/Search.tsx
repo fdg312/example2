@@ -4,7 +4,8 @@ import { IAdd } from '@/types/add.interface'
 import Link from 'next/link'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { SearchInput } from '../input/searchInput/SearchInput'
+import { FaSearch } from 'react-icons/fa'
+import { MyInput } from '../input/myinput/MyInput'
 import { CategorySelect } from '../select/categoryselect/CategorySelect'
 import styles from './search.module.scss'
 
@@ -46,7 +47,6 @@ export const Search = () => {
 
 	useEffect(() => {
 		setDisabled(true)
-		console.log('selectValue')
 
 		const category = getCategory(selectValue)?.slug
 		if (selectValue) {
@@ -85,12 +85,19 @@ export const Search = () => {
 				onChange={e => setSelectValue(e.target.value)}
 			/>
 			<div className='relative inline'>
-				<SearchInput
+				<MyInput
+					width='350px'
+					onKeyEnter={() => router.push('/?query=' + searchValue)}
 					setValue={setSearchValue}
 					value={searchValue}
-					type='text'
-					text='Поиск...'
+					text='Поиск'
 				/>
+				<div
+					onClick={() => router.push('/?query=' + searchValue)}
+					className={styles.icon}
+				>
+					<FaSearch />
+				</div>
 				<div className='absolute top-[38px] w-full left-0 ps-3 bg-white'>
 					{typeof searchRes === 'object' &&
 						searchRes.map((add: IAdd) => (
