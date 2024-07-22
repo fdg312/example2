@@ -8,9 +8,9 @@ import {
 	UsePipes,
 	ValidationPipe,
 } from '@nestjs/common'
+import { Auth } from '../auth/decorators/auth.decorator'
+import { CurrentUser } from '../auth/decorators/user.decorator'
 import { FavouriteService } from './favourite.service'
-import { Auth } from 'src/auth/decorators/auth.decorator'
-import { CurrentUser } from 'src/auth/decorators/user.decorator'
 
 @Controller('favourites')
 export class FavouriteController {

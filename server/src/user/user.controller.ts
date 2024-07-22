@@ -3,18 +3,14 @@ import {
 	Controller,
 	Get,
 	HttpCode,
-	Param,
-	Patch,
-	Post,
 	Put,
 	UsePipes,
 	ValidationPipe,
 } from '@nestjs/common'
-import { UserService } from './user.service'
-import { AuthDto } from '../auth/auth.dto'
-import { Auth } from 'src/auth/decorators/auth.decorator'
-import { CurrentUser } from 'src/auth/decorators/user.decorator'
+import { Auth } from '../auth/decorators/auth.decorator'
+import { CurrentUser } from '../auth/decorators/user.decorator'
 import { UpdateUserDto } from './user.dto'
+import { UserService } from './user.service'
 
 @Controller('users')
 export class UserController {

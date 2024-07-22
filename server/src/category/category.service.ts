@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common'
-import { getSlugify } from 'src/config/slugify'
+import { getSlugify } from '../config/slugify'
 import { PrismaService } from '../prisma.service'
 import { CreateCategoryDto } from './create.dto'
 
