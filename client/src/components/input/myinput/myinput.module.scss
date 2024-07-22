@@ -3,11 +3,14 @@
 .input {
 	width: 100%;
 	border: 2px solid $light-grey;
-	border-radius: 10px;
+	// border-radius: 10px;
+	border-right: 0;
 	padding: 15px 25px;
+	height: 100%;
 	&:focus {
 		box-shadow: none;
 		border: 2px solid $blue;
+		border-right: 0;
 	}
 	&::placeholder {
 		color: $light-grey;
@@ -15,21 +18,19 @@
 	::-ms-input-placeholder {
 		color: $light-grey;
 	}
-	&__wrapper {
-		display: inline-flex;
-		align-items: center;
-		height: 100%;
-	}
+	// &__wrapper {
+	// 	display: inline-flex;
+	// 	align-items: center;
+	// 	height: 100%;
+	// }
 }
 
-.search {
-	@extend .input;
-	border-right: 0;
-	border-top-right-radius: 0;
-	border-bottom-right-radius: 0;
-	&:focus {
-		border-right: 0;
-	}
-}
-
-
+// .search {
+// 	@extend .input;
+// 	border-right: 0;
+// 	border-top-right-radius: 0;
+// 	border-bottom-right-radius: 0;
+// 	&:focus {
+// 		border-right: 0;
+// 	}
+// }

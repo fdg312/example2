@@ -2,6 +2,7 @@
 const path = require('path')
 
 const nextConfig = {
+	reactStrictMode: true,
 	env: {
 		SERVER_URL: 'http://localhost:3000/api',
 	},

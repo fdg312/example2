@@ -1,6 +1,5 @@
 'use client'
 
-import { AddsDiv } from '@/components/addsDiv/addsDiv'
 import { AddService } from '@/services/add'
 import useSessionStore from '@/stores/sessionStore'
 import { Mulish } from 'next/font/google'
@@ -69,7 +68,7 @@ export default function Default() {
 						Нет объявлений
 					</h2>
 				)}
-				<AddsDiv loading={loading} setLoading={setLoading} adds={adds} />
+				{/* <AddsDiv loading={loading} setLoading={setLoading} adds={adds} /> */}
 			</div>
 		</main>
 	)

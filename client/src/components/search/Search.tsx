@@ -76,15 +76,15 @@ export const Search = () => {
 
 	return (
 		<div>
-			<CategorySelect
-				id='categorySelect'
-				categories={categories}
-				disabled={false}
-				styles={styles.select}
-				value={selectValue}
-				onChange={e => setSelectValue(e.target.value)}
-			/>
-			<div className='relative inline'>
+			<div className={styles.search}>
+				<CategorySelect
+					id='categorySelect'
+					categories={categories}
+					disabled={false}
+					styles={styles.select}
+					value={selectValue}
+					onChange={e => setSelectValue(e.target.value)}
+				/>
 				<MyInput
 					width='350px'
 					onKeyEnter={() => router.push('/?query=' + searchValue)}
