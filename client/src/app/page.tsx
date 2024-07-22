@@ -15,6 +15,28 @@ export default function Default() {
 	const [loading, setLoading] = useState(true)
 	const searchParams = useSearchParams()
 
+	useEffect(() => {
+		const fetchData = async (city: string = '') => {
+			const adds = await AddService.getAll(
+				10,
+				searchParams.get('query') || '',
+				city
+			)
+
+			setAdds(adds)
+		}
+		fetchData()
+		useSessionStore.subscribe((state, prevState) => {
+			if (state.city !== prevState.city) {
+				if (checkCityIncluding(state.city)) {
+					fetchData(state.city)
+				}
+			}
+		})
+
+		setLoading(false)
+	}, [searchParams, city])
+
 	const checkCityIncluding = useCallback((target: string) => {
 		const filteredData = data.filter(obj =>
 			obj.city.toLowerCase().includes(target.toLowerCase())
@@ -26,36 +48,36 @@ export default function Default() {
 		return false
 	}, [])
 
-	const fetchData = useCallback(
-		async (city: string = '') => {
-			const addss = await AddService.getAll(
-				10,
-				searchParams.get('query') || '',
-				city
-			)
-			console.log(addss)
+	// const fetchData = useCallback(
+	// 	async (city: string = '') => {
+	// 		const addss = await AddService.getAll(
+	// 			10,
+	// 			searchParams.get('query') || '',
+	// 			city
+	// 		)
+	// 		console.log(addss)
 
-			setAdds(addss)
-			setLoading(false)
-		},
-		[searchParams, setAdds]
-	)
+	// 		setAdds(addss)
+	// 		setLoading(false)
+	// 	},
+	// 	[searchParams, setAdds]
+	// )
 
-	useEffect(() => {
-		// if (city && checkCityIncluding(city)) {
-		// 	fetchData(city)
-		// }
-		fetchData()
-		const unsubscribe = useSessionStore.subscribe((state, prevState) => {
-			if (state.city !== prevState.city) {
-				if (checkCityIncluding(state.city)) {
-					fetchData(state.city)
-				}
-			}
-		})
+	// useEffect(() => {
+	// 	if (city && checkCityIncluding(city)) {
+	// 		fetchData(city)
+	// 	}
+	// 	// fetchData()
+	// 	const unsubscribe = useSessionStore.subscribe((state, prevState) => {
+	// 		if (state.city !== prevState.city) {
+	// 			if (checkCityIncluding(state.city)) {
+	// 				fetchData(state.city)
+	// 			}
+	// 		}
+	// 	})
 
-		return () => unsubscribe()
-	}, [city, checkCityIncluding, fetchData])
+	// 	return () => unsubscribe()
+	// }, [city, checkCityIncluding, fetchData])
 
 	return (
 		<main className='container'>

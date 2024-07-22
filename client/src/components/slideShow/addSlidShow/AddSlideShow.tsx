@@ -9,8 +9,6 @@ type SlideShowProps = {
 }
 
 const SlideShow: React.FC<SlideShowProps> = ({ slides }) => {
-	console.log(slides)
-
 	return (
 		<Swiper spaceBetween={100} slidesPerView={5}>
 			{slides.map((slide, index) => (

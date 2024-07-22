@@ -13,7 +13,7 @@ export class AddService {
 	constructor(private readonly prisma: PrismaService) {}
 
 	async getAll(take: number = 10, text: string, city: string) {
-		return await this.prisma.add.findMany({
+		const adds = await this.prisma.add.findMany({
 			where: {
 				title: {
 					contains: text,
@@ -34,6 +34,8 @@ export class AddService {
 			},
 			take: +take,
 		})
+
+		return adds
 	}
 
 	async getBySlug(slug: string) {
@@ -203,10 +205,8 @@ export class AddService {
 				id,
 			},
 		})
-		console.log(add)
 
 		if (!add) throw new NotFoundException('Add not found')
-		console.log(add)
 
 		return await this.prisma.add.findMany({
 			where: {

@@ -94,6 +94,8 @@ export class AddController {
 	@HttpCode(200)
 	@Get(':id/related')
 	async getRelated(@Param('id') id: string, @Query('take') take: string) {
+		console.log(123)
+
 		return await this.addService.getRelated(id, +take)
 	}
 }

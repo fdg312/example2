@@ -15,15 +15,15 @@ type SessionState = {
 }
 
 const useSessionStore = create<SessionState>(set => {
-	// const fetchData = async () => {
-	// 	const categories = await CategoryService.getAll()
-	// 	const adds = await AddService.getAll(10)
+	const fetchData = async () => {
+		const categories = await CategoryService.getAll()
+		const adds = await AddService.getAll(10)
 
-	// 	set({ categories })
-	// 	set({ adds })
-	// }
+		set({ categories })
+		set({ adds })
+	}
 
-	// fetchData()
+	fetchData()
 
 	return {
 		city: 'Россия',

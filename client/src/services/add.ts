@@ -14,6 +14,7 @@ export const AddService = {
 			text = text && `&search=${text}`
 			let cityValue = city == 'Россия' ? '' : city
 			cityValue = cityValue && `&city=${cityValue}`
+			console.log(`http://localhost:3000/api/adds?${take}${text}${cityValue}`)
 
 			// const response = await instance.get(`/adds?${take}${text}${cityValue}`)
 			const response = await fetch(
@@ -26,7 +27,6 @@ export const AddService = {
 					next: { revalidate: 50 },
 				}
 			).then(res => res.json())
-			console.log(response)
 
 			return response
 		} catch (e) {}
@@ -34,8 +34,6 @@ export const AddService = {
 
 	async getRelated(id: string, take: number = 10): Promise<IAddResponse[]> {
 		try {
-			console.log(id)
-
 			const response = await instance.get(`/adds/${id}/related?take=${take}`)
 
 			return response.data
