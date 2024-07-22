@@ -12,7 +12,7 @@ export function middleware(request: NextRequest) {
 
 export const config = {
 	matcher: [
-		'/adds',
+		// '/adds',
 		'/settings',
 		'/adds/:path*/update',
 		'/favourites',

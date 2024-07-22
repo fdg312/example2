@@ -32,7 +32,6 @@ const PageAdd = ({ params }: { params: { slug: string } }) => {
 		async function fetchData() {
 			const data = await AddService.getBySlug(params.slug)
 			setAdd(data)
-			console.log(data)
 
 			const related = await AddService.getRelated(data.id)
 			setRelatedAdds(related)

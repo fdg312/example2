@@ -2,11 +2,10 @@ import { IAddResponse } from '@/types/add.interface'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Dispatch, SetStateAction } from 'react'
-import { FaPenToSquare } from 'react-icons/fa6'
+import { FaPenSquare } from 'react-icons/fa'
 import Loader from '../../../public/loader2.gif'
 import { HeartIcon } from '../heartIcon/heartIcon'
 import { ProductCard } from '../productcard/ProductCard'
-import { FaPenSquare } from 'react-icons/fa'
 
 export const AddsDiv = ({
 	adds,
@@ -41,12 +40,7 @@ export const AddsDiv = ({
 						className='mb-3 mr-5 inline-flex relative'
 						href={'/adds/' + add.slug}
 					>
-						<ProductCard
-							title={add.title}
-							text={add.text}
-							price={add.price}
-							city={add.city}
-						/>
+						<ProductCard title={add.title} price={add.price} city={add.city} />
 						{favourites && (
 							<HeartIcon setIsChanged={setReload} addId={String(add.id)} />
 						)}

@@ -54,8 +54,6 @@ const CreateAdd = () => {
 	}
 
 	const getCategory = (subcategory: string) => {
-		console.log(subcategory)
-
 		return categories.find(category =>
 			category.subcategories.find(c => c.slug === subcategory)
 		)
@@ -78,6 +76,8 @@ const CreateAdd = () => {
 	const getArrayFiles = (images: { id: number; image: File }[]) => {
 		return images.map(image => image.image)
 	}
+
+	console.log('/adds rerender')
 
 	return (
 		<div className='wrapper flex min-h-full flex-col justify-center px-6 py-12 lg:px-8'>

@@ -15,15 +15,15 @@ type SessionState = {
 }
 
 const useSessionStore = create<SessionState>(set => {
-	const fetchData = async () => {
-		const categories = await CategoryService.getAll()
-		const adds = await AddService.getAll(10)
+	// const fetchData = async () => {
+	// 	const categories = await CategoryService.getAll()
+	// 	const adds = await AddService.getAll(10)
 
-		set({ categories })
-		set({ adds })
-	}
+	// 	set({ categories })
+	// 	set({ adds })
+	// }
 
-	fetchData()
+	// fetchData()
 
 	return {
 		city: 'Россия',
@@ -34,9 +34,7 @@ const useSessionStore = create<SessionState>(set => {
 			set({ city })
 			localStorage.setItem('city', city)
 		},
-		setAdds: (adds: Array<IAddResponse>) => {
-			set(prevState => ({ ...prevState, adds }))
-		},
+		setAdds: (adds: Array<IAddResponse>) => set({ adds }),
 		setCategories: (categories: Array<ICategory>) => set({ categories }),
 		setPreviousPage: (previousPage: Array<string>) => set({ previousPage }),
 	}

@@ -1,12 +1,12 @@
 'use client'
 
+import { AddsDiv } from '@/components/addsDiv/addsDiv'
 import { AddService } from '@/services/add'
 import useSessionStore from '@/stores/sessionStore'
 import { Mulish } from 'next/font/google'
 import { useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
 import data from '../constants/russia.json'
-import { AddsDiv } from '@/components/addsDiv/addsDiv'
 
 const mulish = Mulish({ subsets: ['cyrillic'] })
 
@@ -15,20 +15,7 @@ export default function Default() {
 	const [loading, setLoading] = useState(true)
 	const searchParams = useSearchParams()
 
-	const fetchData = useCallback(
-		async (city: string) => {
-			const adds = await AddService.getAll(
-				10,
-				searchParams.get('query') || '',
-				city
-			)
-
-			setAdds(adds)
-		},
-		[searchParams]
-	)
-
-	const checkCityIncluding = (target: string) => {
+	const checkCityIncluding = useCallback((target: string) => {
 		const filteredData = data.filter(obj =>
 			obj.city.toLowerCase().includes(target.toLowerCase())
 		)
@@ -36,23 +23,39 @@ export default function Default() {
 		if (filteredData.length === 1) {
 			return target === filteredData[0].city
 		}
-	}
+		return false
+	}, [])
+
+	const fetchData = useCallback(
+		async (city: string = '') => {
+			const addss = await AddService.getAll(
+				10,
+				searchParams.get('query') || '',
+				city
+			)
+			console.log(addss)
+
+			setAdds(addss)
+			setLoading(false)
+		},
+		[searchParams, setAdds]
+	)
 
 	useEffect(() => {
-		if (city && checkCityIncluding(city)) {
-			fetchData(city)
-		}
-
-		setLoading(false)
-	}, [city, fetchData, checkCityIncluding])
-
-	useSessionStore.subscribe((state, prevState) => {
-		if (state.city !== prevState.city) {
-			if (checkCityIncluding(state.city)) {
-				fetchData(state.city)
+		// if (city && checkCityIncluding(city)) {
+		// 	fetchData(city)
+		// }
+		fetchData()
+		const unsubscribe = useSessionStore.subscribe((state, prevState) => {
+			if (state.city !== prevState.city) {
+				if (checkCityIncluding(state.city)) {
+					fetchData(state.city)
+				}
 			}
-		}
-	})
+		})
+
+		return () => unsubscribe()
+	}, [city, checkCityIncluding, fetchData])
 
 	return (
 		<main className='container'>

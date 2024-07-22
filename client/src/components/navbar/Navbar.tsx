@@ -4,7 +4,7 @@ import useAuth from '@/stores/authStore'
 import useSessionStore from '@/stores/sessionStore'
 import Image from 'next/image'
 import Link from 'next/link'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import avatar from '../../../public/ava.webp'
 import data from '../../constants/russia.json'
 import ButtonExit from '../buttons/buttonExit/ButtonExit'
@@ -22,7 +22,7 @@ const Navbar = () => {
 	const inputCityRef = React.useRef<HTMLInputElement>(null)
 	const divCitiesRef = React.useRef<HTMLDivElement>(null)
 
-	const checkCityIncluding = useCallback((target: string) => {
+	const checkCityIncluding = (target: string) => {
 		const filteredData = data.filter(obj =>
 			obj.city.toLowerCase().includes(target.toLowerCase())
 		)
@@ -32,7 +32,7 @@ const Navbar = () => {
 		}
 
 		return false
-	}, [])
+	}
 
 	const cities = useMemo(() => {
 		if (!inputCity) {
@@ -55,33 +55,27 @@ const Navbar = () => {
 		}
 	}, [])
 
-	const handleChangeCity = useCallback(
-		(target: string) => {
-			if (!target) return
-			setInputCity(target)
+	const handleChangeCity = (target: string) => {
+		if (!target) return
+		setInputCity(target)
 
-			if (checkCityIncluding(target) || target === 'Россия') {
-				setIsEditCity(false)
-				setInputCity(target === 'Россия' ? '' : target)
-				setCity(target)
-				return
+		if (checkCityIncluding(target) || target === 'Россия') {
+			setIsEditCity(false)
+			setInputCity(target === 'Россия' ? '' : target)
+			setCity(target)
+			return
+		}
+	}
+
+	const handleBlurCity = (e: React.FocusEvent) => {
+		setTimeout(() => {
+			if (!isEditCity) {
+				setCity('Россия')
+				setInputCity('')
 			}
-		},
-		[checkCityIncluding]
-	)
-
-	const handleBlurCity = useCallback(
-		(e: React.FocusEvent) => {
-			setTimeout(() => {
-				if (!isEditCity) {
-					setCity('Россия')
-					setInputCity('')
-				}
-				setIsEditCity(false)
-			}, 100)
-		},
-		[isEditCity]
-	)
+			setIsEditCity(false)
+		}, 100)
+	}
 
 	return (
 		<>

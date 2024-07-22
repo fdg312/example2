@@ -1,5 +1,5 @@
 import useSessionStore from '@/stores/sessionStore'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import {
 	Control,
 	Controller,
@@ -39,7 +39,7 @@ const CreateAddForm = ({
 }: CreateAddFormType) => {
 	const [isEditCity, setIsEditCity] = useState(false)
 	const [city, setCity] = useState('')
-	const [cities, setCities] = useState<{ region: string; city: string }[]>([])
+	// const [cities, setCities] = useState<{ region: string; city: string }[]>([])
 	const { categories } = useSessionStore()
 
 	const inputRegisterProps = {
@@ -53,46 +53,57 @@ const CreateAddForm = ({
 		},
 	}
 
-	useEffect(() => {
-		if (!city && isEditCity) return
-		setCities(
-			data
-				.filter(obj => obj.city.toLowerCase().includes(city.toLowerCase()))
-				.slice(0, 3)
-		)
+	// useEffect(() => {
+	// 	if (!city && isEditCity) return
+	// 	setCities(
+	// 		data
+	// 			.filter(obj => obj.city.toLowerCase().includes(city.toLowerCase()))
+	// 			.slice(0, 3)
+	// 	)
+	// }, [city])
+
+	let cities = useMemo<{ region: string; city: string }[]>(() => {
+		return data
+			.filter(obj => obj.city.toLowerCase().includes(city.toLowerCase()))
+			.slice(0, 3)
 	}, [city])
 
-	const handleClickChangeCity = (target: string) => {
-		setIsEditCity(false)
-		setCity(target)
-		setCities([])
-	}
+	const handleClickChangeCity = useCallback(
+		(target: string) => {
+			setIsEditCity(false)
+			setCity(target)
+			cities = []
+		},
+		[setIsEditCity, setCity]
+	)
 
-	const checkCityIncluding = (target: string) => {
+	const checkCityIncluding = useCallback((target: string) => {
 		const filteredData = data.filter(obj =>
 			obj.city.toLowerCase().includes(target.toLowerCase())
 		)
+		return filteredData.length === 1 && target === filteredData[0].city
+	}, [])
 
-		if (filteredData.length === 1) {
-			return target === filteredData[0].city
-		}
-	}
-
-	const handleChangeCity = (target: string) => {
-		if (checkCityIncluding(target)) {
-			setIsEditCity(false)
+	const handleChangeCity = useCallback(
+		(target: string) => {
+			if (checkCityIncluding(target)) {
+				setIsEditCity(false)
+				setCity(target)
+				return
+			}
+			setIsEditCity(true)
 			setCity(target)
-			return
-		}
-		setIsEditCity(true)
-		setCity(target)
-	}
+		},
+		[setIsEditCity, setCity]
+	)
 
-	const handleBlurCity = (e: React.FocusEvent) => {
+	const handleBlurCity = useCallback(() => {
 		setTimeout(() => {
 			setIsEditCity(false)
 		}, 100)
-	}
+	}, [])
+
+	console.log('CreateAddForm rerender')
 
 	return (
 		<form
@@ -145,7 +156,7 @@ const CreateAddForm = ({
 								},
 							})}
 							onChange={e => handleChangeCity(e.target.value)}
-							onBlur={e => handleBlurCity(e)}
+							onBlur={() => handleBlurCity()}
 							value={city}
 							className={
 								'block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-yellow-300 sm:text-sm sm:leading-6 ' +

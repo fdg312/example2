@@ -26,6 +26,7 @@ export const AddService = {
 					next: { revalidate: 50 },
 				}
 			).then(res => res.json())
+			console.log(response)
 
 			return response
 		} catch (e) {}

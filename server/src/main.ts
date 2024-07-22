@@ -1,12 +1,11 @@
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import * as path from 'path';
+import { NestFactory } from '@nestjs/core'
+import { AppModule } from './app.module'
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+	const app = await NestFactory.create(AppModule)
 
-  app.setGlobalPrefix('api')
-  app.enableCors()
-  await app.listen(3000)
+	app.setGlobalPrefix('api')
+	app.enableCors()
+	await app.listen(3000, '0.0.0.0')
 }
-bootstrap();
+bootstrap()
