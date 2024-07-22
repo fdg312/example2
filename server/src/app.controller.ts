@@ -20,7 +20,7 @@ export class AppController {
 	@UseInterceptors(
 		FilesInterceptor('image', 10, {
 			storage: diskStorage({
-				destination: './uploads',
+				destination: '/tmp/uploads',
 				filename: (req, file, cb) => {
 					const uniqueSuffix =
 						Date.now() + '-' + Math.round(Math.random() * 1e9)
