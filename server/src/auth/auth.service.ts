@@ -7,9 +7,9 @@ import {
 } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { hash, verify } from 'argon2'
-import { userSelect } from 'src/user/user.select'
 import { MailService } from '../mail/mail.service'
 import { PrismaService } from '../prisma.service'
+import { userSelect } from '../user/user.select'
 import { AuthDto } from './auth.dto'
 import { Scheduler } from './scheduler'
 
