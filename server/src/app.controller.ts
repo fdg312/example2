@@ -28,10 +28,6 @@ export class AppController {
 					const filename = `${getSlugify(
 						file.originalname.split('.')[0]
 					)}-${uniqueSuffix}${ext}`
-					console.log(
-						getSlugify(file.originalname.split('.')[0]),
-						file.originalname
-					)
 
 					cb(null, filename)
 				},
@@ -39,8 +35,6 @@ export class AppController {
 		})
 	)
 	async uploadFiles(@UploadedFiles() files: Express.Multer.File[]) {
-		console.log(files)
-
 		return files
 	}
 }
