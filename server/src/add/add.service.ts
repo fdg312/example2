@@ -3,7 +3,7 @@ import {
 	Injectable,
 	NotFoundException,
 } from '@nestjs/common'
-import { getSlugify } from 'src/config/slugify'
+import { getSlugify } from '../config/slugify'
 import { PrismaService } from '../prisma.service'
 import { CreateAddDto } from './create.dto'
 import { UpdateAddDto } from './update.dto'
