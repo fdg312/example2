@@ -1,5 +1,8 @@
 {
 	"version": 2,
+	"env": {
+		"DATABASE_URL": "postgresql://marketplace2_user:SqVfNCP3p42E9hWyOYzGgsEtMyF3kBkE@dpg-cqfap1o8fa8c73eofu6g-a.frankfurt-postgres.render.com/marketplace2"
+	},
 	"builds": [
 		{
 			"src": "src/main.ts",
