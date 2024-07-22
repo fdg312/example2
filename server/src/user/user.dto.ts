@@ -1,4 +1,4 @@
-import { AuthDto } from 'src/auth/auth.dto'
+import { AuthDto } from '../auth/auth.dto'
 
 import { IsOptional, IsString } from 'class-validator'
 
