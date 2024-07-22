@@ -32,6 +32,7 @@ export const AddsDiv = ({
 					height={100}
 					src={Loader.src}
 					alt='loader'
+					unoptimized
 				/>
 			) : (
 				adds?.map(add => (

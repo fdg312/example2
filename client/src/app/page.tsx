@@ -4,8 +4,9 @@ import { AddService } from '@/services/add'
 import useSessionStore from '@/stores/sessionStore'
 import { Mulish } from 'next/font/google'
 import { useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import data from '../constants/russia.json'
+import { AddsDiv } from '@/components/addsDiv/addsDiv'
 
 const mulish = Mulish({ subsets: ['cyrillic'] })
 
@@ -14,8 +15,8 @@ export default function Default() {
 	const [loading, setLoading] = useState(true)
 	const searchParams = useSearchParams()
 
-	useEffect(() => {
-		const fetchData = async (city: string) => {
+	const fetchData = useCallback(
+		async (city: string) => {
 			const adds = await AddService.getAll(
 				10,
 				searchParams.get('query') || '',
@@ -23,18 +24,9 @@ export default function Default() {
 			)
 
 			setAdds(adds)
-		}
-
-		useSessionStore.subscribe((state, prevState) => {
-			if (state.city !== prevState.city) {
-				if (checkCityIncluding(state.city)) {
-					fetchData(state.city)
-				}
-			}
-		})
-
-		setLoading(false)
-	}, [searchParams, city])
+		},
+		[searchParams]
+	)
 
 	const checkCityIncluding = (target: string) => {
 		const filteredData = data.filter(obj =>
@@ -45,6 +37,22 @@ export default function Default() {
 			return target === filteredData[0].city
 		}
 	}
+
+	useEffect(() => {
+		if (city && checkCityIncluding(city)) {
+			fetchData(city)
+		}
+
+		setLoading(false)
+	}, [city, fetchData, checkCityIncluding])
+
+	useSessionStore.subscribe((state, prevState) => {
+		if (state.city !== prevState.city) {
+			if (checkCityIncluding(state.city)) {
+				fetchData(state.city)
+			}
+		}
+	})
 
 	return (
 		<main className='container'>
@@ -68,7 +76,7 @@ export default function Default() {
 						Нет объявлений
 					</h2>
 				)}
-				{/* <AddsDiv loading={loading} setLoading={setLoading} adds={adds} /> */}
+				<AddsDiv loading={loading} setLoading={setLoading} adds={adds} />
 			</div>
 		</main>
 	)

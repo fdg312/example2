@@ -4,7 +4,7 @@ import useAuth from '@/stores/authStore'
 import useSessionStore from '@/stores/sessionStore'
 import Image from 'next/image'
 import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import avatar from '../../../public/ava.webp'
 import data from '../../constants/russia.json'
 import ButtonExit from '../buttons/buttonExit/ButtonExit'
@@ -16,21 +16,33 @@ const Navbar = () => {
 	const { isAuth, logout } = useAuth()
 	const { city, setCity } = useSessionStore()
 	const [isEditCity, setIsEditCity] = useState(false)
-	const [cities, setCities] = useState<{ region: string; city: string }[]>([])
+	// const [cities, setCities] = useState<{ region: string; city: string }[]>([])
 	const [inputCity, setInputCity] = useState('')
 	// const [targetCity, setTargetCity] = useState('')
 	const inputCityRef = React.useRef<HTMLInputElement>(null)
 	const divCitiesRef = React.useRef<HTMLDivElement>(null)
 
-	// const getInputCity = useCallback(() => {
+	const checkCityIncluding = useCallback((target: string) => {
+		const filteredData = data.filter(obj =>
+			obj.city.toLowerCase().includes(target.toLowerCase())
+		)
 
-	// 	console.log(
-	// 		inputCity,
-	// 		data
-	// 			.filter(obj => obj.city.toLowerCase().includes(inputCity.toLowerCase()))
-	// 			.slice(0, 3)
-	// 	)
-	// }, [inputCity])
+		if (filteredData.length === 1) {
+			return target === filteredData[0].city
+		}
+
+		return false
+	}, [])
+
+	const cities = useMemo(() => {
+		if (!inputCity) {
+			return []
+		}
+
+		return data
+			.filter(obj => obj.city.toLowerCase().includes(inputCity.toLowerCase()))
+			.slice(0, 3)
+	}, [inputCity])
 
 	useEffect(() => {
 		if (localStorage.getItem('city')) {
@@ -41,51 +53,35 @@ const Navbar = () => {
 					: localStorage.getItem('city') ?? ''
 			)
 		}
-
-		// getInputCity()
 	}, [])
 
-	const checkCityIncluding = (target: string) => {
-		const filteredData = data.filter(obj =>
-			obj.city.toLowerCase().includes(target.toLowerCase())
-		)
+	const handleChangeCity = useCallback(
+		(target: string) => {
+			if (!target) return
+			setInputCity(target)
 
-		if (filteredData.length === 1) {
-			return target === filteredData[0].city
-		}
-	}
-
-	useEffect(() => {
-		if (isEditCity) {
-			inputCityRef.current?.focus()
-		}
-	}, [isEditCity])
-
-	const handleChangeCity = (target: string) => {
-		if (!target) return
-		setInputCity(target)
-		setCities(
-			data
-				.filter(obj => obj.city.toLowerCase().includes(inputCity.toLowerCase()))
-				.slice(0, 3)
-		)
-		if (checkCityIncluding(target) || target === 'Россия') {
-			setIsEditCity(false)
-			setInputCity(target === 'Россия' ? '' : target)
-			setCity(target)
-			return
-		}
-	}
-
-	const handleBlurCity = (e: React.FocusEvent) => {
-		setTimeout(() => {
-			if (!isEditCity) {
-				setCity('Россия')
-				setInputCity('')
+			if (checkCityIncluding(target) || target === 'Россия') {
+				setIsEditCity(false)
+				setInputCity(target === 'Россия' ? '' : target)
+				setCity(target)
+				return
 			}
-			setIsEditCity(false)
-		}, 100)
-	}
+		},
+		[checkCityIncluding]
+	)
+
+	const handleBlurCity = useCallback(
+		(e: React.FocusEvent) => {
+			setTimeout(() => {
+				if (!isEditCity) {
+					setCity('Россия')
+					setInputCity('')
+				}
+				setIsEditCity(false)
+			}, 100)
+		},
+		[isEditCity]
+	)
 
 	return (
 		<>

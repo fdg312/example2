@@ -34,7 +34,9 @@ const useSessionStore = create<SessionState>(set => {
 			set({ city })
 			localStorage.setItem('city', city)
 		},
-		setAdds: (adds: Array<IAddResponse>) => set({ adds }),
+		setAdds: (adds: Array<IAddResponse>) => {
+			set(prevState => ({ ...prevState, adds }))
+		},
 		setCategories: (categories: Array<ICategory>) => set({ categories }),
 		setPreviousPage: (previousPage: Array<string>) => set({ previousPage }),
 	}
