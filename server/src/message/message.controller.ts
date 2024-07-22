@@ -1,16 +1,15 @@
 import {
 	Body,
 	Controller,
-	Get,
 	HttpCode,
 	Param,
 	Post,
 	UsePipes,
 	ValidationPipe,
 } from '@nestjs/common'
+import { Auth } from '../auth/decorators/auth.decorator'
+import { CurrentUser } from '../auth/decorators/user.decorator'
 import { MessageService } from './message.service'
-import { Auth } from 'src/auth/decorators/auth.decorator'
-import { CurrentUser } from 'src/auth/decorators/user.decorator'
 
 @Controller('message')
 export class MessageController {
