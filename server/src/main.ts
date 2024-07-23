@@ -7,8 +7,5 @@ async function bootstrap() {
 	app.setGlobalPrefix('api')
 	app.enableCors()
 	await app.listen(3000)
-
-	return app
 }
-
-export const handler = bootstrap()
+bootstrap()
