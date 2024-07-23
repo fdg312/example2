@@ -4,12 +4,6 @@
 		"DATABASE_URL": "postgresql://marketplace2_user:SqVfNCP3p42E9hWyOYzGgsEtMyF3kBkE@dpg-cqfap1o8fa8c73eofu6g-a.frankfurt-postgres.render.com/marketplace2",
 		"JWT_SECRET": "moPmS}~u@J"
 	},
-	"builds": [
-		{
-			"src": "src/main.ts",
-			"use": "@vercel/node"
-		}
-	],
 	"routes": [
 		{
 			"src": "/(.*)",
