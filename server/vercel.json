@@ -16,5 +16,11 @@
 			"dest": "src/main.ts",
 			"methods": ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"]
 		}
-	]
+	],
+	"functions": {
+		"api/**/*.ts": {
+			"runtime": "nodejs14.x",
+			"maxDuration": 30
+		}
+	}
 }
