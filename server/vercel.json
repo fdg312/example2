@@ -16,5 +16,11 @@
 			"methods": ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"]
 		}
 	],
+	"functions": {
+		"api/**/*.ts": {
+			"runtime": "nodejs14.x",
+			"maxDuration": 30
+		}
+	},
 	"buildCommand": "npm run build && npx prisma generate"
 }
