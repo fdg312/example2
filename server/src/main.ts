@@ -8,4 +8,4 @@ async function bootstrap() {
 	app.enableCors()
 	await app.listen(3000)
 }
-export default bootstrap()
+bootstrap()
